@@ -1,5 +1,8 @@
 extends Sprite
 
+# TODO Add ability to disrupt fly path
+# TODO Add path prediction, plan for changing paths
+
 onready var player = get_node("/root/Main/Player")
 onready var target_position = player.position
 
