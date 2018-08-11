@@ -2,7 +2,7 @@ extends Area2D
 
 # TODO Remove out of screen
 
-export var speed = 1200
+export var speed = 500.0
 var explosion_radius
 
 var ref_target
@@ -26,7 +26,7 @@ func _process(delta):
 		var target = ref_target.get_ref()
 		velocity = ((target.position + target_offset) - position).normalized() * speed
 	
-	position += velocity * delta	
+	position += velocity * delta
 
 func _draw():
 	if DebugInfo.visible:

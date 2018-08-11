@@ -3,7 +3,7 @@
 [ext_resource path="res://Player/Counter.gd" type="Script" id=1]
 [ext_resource path="res://Player/player.png" type="Texture" id=2]
 
-[node name="Counter" type="Area2D" groups=[
+[node name="Counter" type="Area2D" index="0" groups=[
 "counters",
 ]]
 
@@ -15,7 +15,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
-speed = 300
+speed = 500.0
 
 [node name="Counter" type="Sprite" parent="." index="0"]
 
