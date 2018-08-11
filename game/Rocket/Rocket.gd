@@ -1,7 +1,7 @@
 extends Sprite
 
 # TODO Add ability to disrupt fly path
-# TODO Add path prediction, plan for changing paths
+# TODO Plan for changing paths
 
 onready var player = get_node("/root/Main/Player")
 onready var target_position = player.position
@@ -34,14 +34,20 @@ func _physics_process(delta):
 func _draw():
 	# Preview explosion radius
 	draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
+	draw_flight_prediction()
 	
-	# Preview flight path
+
+func draw_flight_prediction():
 	var frames_passed = 0
 	var preview_position = position
+	var timescale = Engine.time_scale
 	
-	while preview_position.distance_to(target_position) > 1:
+	while preview_position.distance_to(target_position) > 10:
+		if Engine.time_scale != timescale:
+			return
+		
 		frames_passed += 1
-		preview_position += velocity * (1.0/60)
-	
-		if frames_passed % 20 == 0:
+		preview_position += velocity * (1.0/60) * timescale
+
+		if frames_passed % int(20 * (1 / timescale)) == 0:
 			draw_circle(to_local(preview_position), 5, Color(1, 1, 1))
