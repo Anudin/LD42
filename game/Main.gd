@@ -11,6 +11,7 @@ export var explosion_radius = 32
 
 export var shrinking_rate = 2
 var playarea_radius
+var playarea_min_radius = 200
 
 func _ready():
 	DebugInfo.visible = true
@@ -21,6 +22,9 @@ func _ready():
 func _process(delta):
 	playarea_radius -= delta * shrinking_rate
 	update()
+	
+	if playarea_radius < playarea_min_radius:
+		pass # TODO Next level?
 	
 	if get_tree().get_nodes_in_group("rockets").size() == 0:
 		add_rocket(Vector2(0,0))
