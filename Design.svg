@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="242.15558"
-     inkscape:cy="515.64049"
+     inkscape:zoom="0.7"
+     inkscape:cx="663.18238"
+     inkscape:cy="691.76088"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,7 +35,9 @@
      inkscape:window-height="1017"
      inkscape:window-x="-8"
      inkscape:window-y="32"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -44,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -57,7 +59,7 @@
        id="rect815"
        width="508"
        height="285.75"
-       x="-131.15775"
+       x="-131.02411"
        y="-59.05357" />
     <circle
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.2;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
@@ -69,11 +71,12 @@
        inkscape:export-ydpi="96" />
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.04131187px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 75.347993,79.463591 0.0188,7.560007 14.94279,-4.178304 z"
+       d="m 75.147541,78.941467 0.0188,7.483547 14.94279,-3.741773 z"
        id="path824"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc"
        inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Users\basti\Desktop\LD42\Project\game\Rocket\rocket.png" />
   </g>
 </svg>

@@ -36,6 +36,8 @@ func _draw():
 	# Preview explosion radius
 	draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
 	draw_flight_prediction()
+	
+#	draw_line(
 
 func draw_flight_prediction():
 	var frames_passed = 0

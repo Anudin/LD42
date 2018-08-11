@@ -1,11 +1,13 @@
 extends Area2D
 
 export var target_timescale = .33
+export var target_cone_angle = 45
 export var boost_length_sec = 1
 export var boost_acceleration = 480
 export var boost_speed = 720
 
-const TARGET_RADIUS = 15
+const TARGET_ACTIVATION_RADIUS = 200
+const TARGET_VISIBLE_RADIUS = 60
 
 var timer_doubleclick
 var timer_boost
@@ -19,6 +21,8 @@ var acceleration = Vector2(0,0)
 var target_mode = false
 
 func _ready():
+	target_cone_angle = deg2rad(target_cone_angle)
+	
 	timer_doubleclick = Timer.new()
 	timer_doubleclick.wait_time = TimingConstants.TRESHOLD_DOUBLECLICK
 	timer_doubleclick.one_shot = true
@@ -76,6 +80,9 @@ func register_doubleclick_input_event(event):
 	if boost_activated:
 		timer_boost.start()
 
+func _process(delta):
+	update()
+
 func _physics_process(delta):
 	velocity += acceleration * delta
 	
@@ -97,4 +104,34 @@ func _draw():
 func target():
 	var rockets = get_tree().get_nodes_in_group("rockets")
 	
+	var closest_rocket = null
+	var closest_distance = INF
 	
+	# Draw activation radius
+	# Find closest targetable rocket
+	for rocket in rockets:
+		draw_circle(to_local(rocket.position), TARGET_ACTIVATION_RADIUS, Color("11FFFF00"))
+		
+		var distance_to_mouse = get_global_mouse_position().distance_to(rocket.position)
+		
+		if distance_to_mouse <= TARGET_ACTIVATION_RADIUS and \
+		distance_to_mouse < closest_distance:
+			closest_distance = distance_to_mouse
+			closest_rocket = rocket
+	
+	# Provide aim point
+	if closest_rocket != null:
+		var rocket_to_mouse = get_global_mouse_position() - closest_rocket.position
+		
+		var direction = rocket_to_mouse.normalized()
+		var hit_angle = direction.angle_to(closest_rocket.target_position)
+		
+		if hit_angle < -target_cone_angle:
+			direction = direction.rotated(hit_angle + target_cone_angle)
+		elif hit_angle > target_cone_angle:
+			direction = direction.rotated(hit_angle - target_cone_angle)
+		
+		draw_rect(Rect2(
+			to_local(closest_rocket.position + direction * TARGET_VISIBLE_RADIUS), 
+			Vector2(8,8)
+		), Color(1, 0, 0))

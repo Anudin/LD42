@@ -10,6 +10,9 @@ explosion_radius = 32
 
 [node name="Player" parent="." index="0" instance=ExtResource( 2 )]
 
+z_index = 1
+_sections_unfolded = [ "Z Index" ]
 target_timescale = 0.33
+target_cone_angle = 45
 
 
