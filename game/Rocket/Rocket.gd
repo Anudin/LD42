@@ -1,6 +1,5 @@
 extends Area2D
 
-# TODO Remove rocket out of screen bounds
 # TODO Unlimited acceleration!
 
 onready var player = get_node("/root/Main/Player")
