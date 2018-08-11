@@ -18,6 +18,9 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
+boost_length_sec = 1
+boost_acceleration = 480
+boost_speed = 720
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
