@@ -32,6 +32,12 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -0.583969, -7.62939e-006 )
 shape = SubResource( 1 )
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="2"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
 [connection signal="area_shape_entered" from="." to="." method="_on_Rocket_area_shape_entered"]
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 
