@@ -32,4 +32,16 @@ func _physics_process(delta):
 	update()
 
 func _draw():
+	# Preview explosion radius
 	draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
+	
+	# Preview flight path
+	var frames_passed = 0
+	var preview_position = position
+	
+	while preview_position.distance_to(target_position) > 1:
+		frames_passed += 1
+		preview_position += velocity * (1.0/60)
+	
+		if frames_passed % 20 == 0:
+			draw_circle(to_local(preview_position), 5, Color(1, 1, 1))

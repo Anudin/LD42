@@ -74,6 +74,14 @@ func register_doubleclick_input_event(event):
 	if boost_activated:
 		timer_boost.start()
 
+func _process(delta):
+	if target_mode:
+		target()
+
+# TODO Rename
+func target():
+	pass
+
 func _physics_process(delta):
 	velocity += acceleration * delta
 	
