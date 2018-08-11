@@ -9,4 +9,6 @@ script = ExtResource( 1 )
 
 [node name="Player" parent="." index="0" instance=ExtResource( 2 )]
 
+target_timescale = 0.33
+
 

@@ -1,5 +1,6 @@
 extends Area2D
 
+export var target_timescale = .33
 export var boost_length_sec = 1
 export var boost_acceleration = 480
 export var boost_speed = 720
@@ -12,6 +13,8 @@ var max_acceleration = 120
 
 var velocity = Vector2(0,0)
 var acceleration = Vector2(0,0)
+
+var target_mode = false
 
 func _ready():
 	timer_doubleclick = Timer.new()
@@ -42,6 +45,14 @@ func _input(event):
 		acceleration.x = max_acceleration
 	else:
 		movement_event_occured = false
+	
+	if event.is_action_pressed("player_target"):
+		target_mode = not target_mode
+		
+		if target_mode:
+			Engine.time_scale = target_timescale
+		else:
+			Engine.time_scale = 1
 	
 	if movement_event_occured:
 		timer_doubleclick.start()
