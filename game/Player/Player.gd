@@ -5,6 +5,8 @@ export var boost_length_sec = 1
 export var boost_acceleration = 480
 export var boost_speed = 720
 
+const TARGET_RADIUS = 15
+
 var timer_doubleclick
 var timer_boost
 
@@ -74,14 +76,6 @@ func register_doubleclick_input_event(event):
 	if boost_activated:
 		timer_boost.start()
 
-func _process(delta):
-	if target_mode:
-		target()
-
-# TODO Rename
-func target():
-	pass
-
 func _physics_process(delta):
 	velocity += acceleration * delta
 	
@@ -94,3 +88,13 @@ func _physics_process(delta):
 
 func hit_by_rocket():
 	print("fuck me")
+
+func _draw():
+	if target_mode:
+		target()
+
+# TODO Rename
+func target():
+	var rockets = get_tree().get_nodes_in_group("rockets")
+	
+	
