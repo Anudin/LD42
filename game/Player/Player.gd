@@ -1,5 +1,8 @@
 extends Area2D
 
+var tscn_counter = preload("res://Player/Counter.tscn")
+
+export var target_mode_length = 3
 export var target_timescale = .33
 export var target_cone_angle = 45
 export var boost_length_sec = 1
@@ -7,6 +10,7 @@ export var boost_acceleration = 480
 export var boost_speed = 720
 
 const TARGET_ACTIVATION_RADIUS = 200
+# TODO Rename TARGET_EXPLOSION_RADIUS, or even better move to Counter
 const TARGET_VISIBLE_RADIUS = 60
 
 var timer_doubleclick
@@ -19,6 +23,7 @@ var velocity = Vector2(0,0)
 var acceleration = Vector2(0,0)
 
 var target_mode = false
+var target_position = null
 
 func _ready():
 	target_cone_angle = deg2rad(target_cone_angle)
@@ -59,6 +64,9 @@ func _input(event):
 			Engine.time_scale = target_timescale
 		else:
 			Engine.time_scale = 1
+	elif target_mode and event.is_action_pressed("player_counter"):
+		counter()
+		Engine.time_scale = 1
 	
 	if movement_event_occured:
 		timer_doubleclick.start()
@@ -134,7 +142,14 @@ func target():
 		elif hit_angle > target_cone_angle:
 			direction = direction.rotated(hit_angle - target_cone_angle)
 		
+		target_position = closest_rocket.position + direction * TARGET_VISIBLE_RADIUS
+		
 		draw_rect(Rect2(
-			to_local(closest_rocket.position + direction * TARGET_VISIBLE_RADIUS), 
+			to_local(target_position), 
 			Vector2(8,8)
 		), Color(1, 0, 0))
+
+func counter():
+	var counter = tscn_counter.instance()
+	counter.init(position, target_position, TARGET_VISIBLE_RADIUS)
+	get_node("/root/Main").add_child(counter)
