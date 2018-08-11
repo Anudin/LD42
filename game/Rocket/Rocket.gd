@@ -1,6 +1,7 @@
 extends Sprite
 
-onready var target_position = get_node("/root/Main/Player").position
+onready var player = get_node("/root/Main/Player")
+onready var target_position = player.position
 
 var explosion_radius
 var max_velocity = 180
@@ -19,6 +20,9 @@ func _physics_process(delta):
 	position += velocity * delta
 	
 	if position.distance_to(target_position) < 1:
+		if position.distance_to(player.position) < explosion_radius:
+			player.hit_by_rocket()
+		
 		get_parent().remove_child(self)
 		queue_free()
 	

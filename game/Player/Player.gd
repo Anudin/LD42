@@ -21,3 +21,6 @@ func _physics_process(delta):
 	velocity = velocity.clamped(max_speed)
 	
 	position += velocity * delta
+
+func hit_by_rocket():
+	print("fuck me")

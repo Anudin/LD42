@@ -3,7 +3,7 @@
 [ext_resource path="res://Rocket/rocket.png" type="Texture" id=1]
 [ext_resource path="res://Rocket/Rocket.gd" type="Script" id=2]
 
-[node name="Rocket" type="Sprite" index="0"]
+[node name="Rocket" type="Sprite"]
 
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
