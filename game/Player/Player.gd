@@ -25,7 +25,8 @@ var velocity = Vector2(0,0)
 var acceleration = Vector2(0,0)
 
 var target_mode = false
-var target_position = null
+var target = null
+var target_offset
 
 func _ready():
 	target_cone_angle = deg2rad(target_cone_angle)
@@ -66,7 +67,7 @@ func _unhandled_input(event):
 			Engine.time_scale *= target_timescale
 		else:
 			Engine.time_scale *= 1 / target_timescale
-	elif target_mode and target_position != null and event.is_action_pressed("player_counter"):
+	elif target_mode and target != null and event.is_action_pressed("player_counter"):
 		counter()
 		target_mode = false
 		Engine.time_scale *= 1 / target_timescale
@@ -145,16 +146,17 @@ func target():
 		elif hit_angle > target_cone_angle:
 			direction = direction.rotated(hit_angle - target_cone_angle)
 		
-		target_position = closest_rocket.position + direction * TARGET_VISIBLE_RADIUS
+		target = closest_rocket
+		target_offset = direction * TARGET_VISIBLE_RADIUS
 		
 		draw_rect(Rect2(
-			to_local(target_position), 
+			to_local(target.position + target_offset), 
 			Vector2(8,8)
 		), Color(1, 0, 0))
 	else:
-		target_position = null
+		target = null
 
 func counter():
 	var counter = tscn_counter.instance()
-	counter.init(position, target_position, TARGET_VISIBLE_RADIUS)
+	counter.init(position, weakref(target), target_offset, TARGET_VISIBLE_RADIUS)
 	get_node("/root/Main").add_child(counter)
