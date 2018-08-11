@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 29.6873, 15.5504 )
+extents = Vector2( 15.3799, 7.95864 )
 
 [node name="Rocket" type="Area2D" index="0" groups=[
 "rockets",
@@ -24,6 +24,7 @@ _sections_unfolded = [ "Offset", "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 

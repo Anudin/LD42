@@ -1,14 +1,14 @@
 extends Area2D
 
-# TODO Unlimited acceleration!
-
 onready var player = get_node("/root/Main/Player")
 onready var target_position = player.position
 
 var explosion_radius
-var max_velocity = 180
+var initial_velocity = 60
 
 var velocity
+var acceleration = 1
+var tween_initial_acceleration
 
 var pushed = false
 var destroyed = false
@@ -16,7 +16,20 @@ var destroyed = false
 func _ready():
 	var target_angle = get_angle_to(target_position)
 	rotation = target_angle
-	velocity = Vector2(cos(target_angle), sin(target_angle)) * max_velocity
+	velocity = Vector2(cos(target_angle), sin(target_angle)) * initial_velocity
+	
+	# Accelerate on startup
+	tween_initial_acceleration = Tween.new()
+	add_child(tween_initial_acceleration)
+	
+	tween_initial_acceleration.interpolate_method(self, "set_velocity", velocity, velocity * 10, 1,
+		Tween.TRANS_EXPO,
+		Tween.EASE_IN,
+		0)
+	tween_initial_acceleration.start()
+
+func set_velocity(value):
+	velocity = value
 
 func init(explosion_radius):
 	self.explosion_radius = explosion_radius
@@ -73,7 +86,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 func _on_VisibilityNotifier2D_screen_exited():
 	destroy()
 
-func destroy():	
+func destroy():
 	if not destroyed:
 		destroyed = true
 		
