@@ -35,9 +35,9 @@ func _physics_process(delta):
 func _draw():
 	# Preview explosion radius
 	draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
-	draw_flight_prediction()
 	
-#	draw_line(
+	if DebugInfo.visible:
+		draw_flight_prediction()
 
 func draw_flight_prediction():
 	var frames_passed = 0
@@ -52,7 +52,7 @@ func draw_flight_prediction():
 		preview_position += velocity * (1.0/60) * timescale
 
 		if frames_passed % int(20 * (1 / timescale)) == 0:
-			draw_circle(to_local(preview_position), 5, Color(1, 1, 1))
+			draw_circle(to_local(preview_position), 5, Color("11FFFF00"))
 		elif frames_passed > 1000:
 			# TODO Fix this ugly hack, maybe project on a normal
 			return

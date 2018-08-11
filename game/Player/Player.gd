@@ -107,10 +107,12 @@ func target():
 	var closest_rocket = null
 	var closest_distance = INF
 	
-	# Draw activation radius
 	# Find closest targetable rocket
+	# DEBUG: Draw activation radius, line to player
 	for rocket in rockets:
-		draw_circle(to_local(rocket.position), TARGET_ACTIVATION_RADIUS, Color("11FFFF00"))
+		if DebugInfo.visible:
+			draw_line(Vector2(0,0), to_local(rocket.position), Color("11FFFF00"))
+			draw_circle(to_local(rocket.position), TARGET_ACTIVATION_RADIUS, Color("11FFFF00"))
 		
 		var distance_to_mouse = get_global_mouse_position().distance_to(rocket.position)
 		
@@ -122,9 +124,10 @@ func target():
 	# Provide aim point
 	if closest_rocket != null:
 		var rocket_to_mouse = get_global_mouse_position() - closest_rocket.position
+		var rocket_to_player = position - closest_rocket.position
 		
 		var direction = rocket_to_mouse.normalized()
-		var hit_angle = direction.angle_to(closest_rocket.target_position)
+		var hit_angle = direction.angle_to(rocket_to_player)
 		
 		if hit_angle < -target_cone_angle:
 			direction = direction.rotated(hit_angle + target_cone_angle)
