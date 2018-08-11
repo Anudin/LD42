@@ -1,7 +1,6 @@
 extends Area2D
 
-# TODO Add ability to disrupt fly path
-# TODO Plan for changing paths
+# TODO Remove rocket out of screen bounds
 # TODO Unlimited acceleration!
 
 onready var player = get_node("/root/Main/Player")
@@ -11,6 +10,8 @@ var explosion_radius
 var max_velocity = 180
 
 var velocity
+
+var pushed = false
 
 func _ready():
 	var target_angle = get_angle_to(target_position)
@@ -23,19 +24,21 @@ func init(explosion_radius):
 func _physics_process(delta):
 	position += velocity * delta
 	
-	# TODO Fix this ugly hack, maybe project on a normal
-	if position.distance_to(target_position) < 10:
-		if position.distance_to(player.position) < explosion_radius:
-			player.hit_by_rocket()
-		
-		get_parent().remove_child(self)
-		queue_free()
+	if not pushed:
+		# TODO Fix this ugly hack, maybe project on a normal
+		if position.distance_to(target_position) < 10:
+			if position.distance_to(player.position) < explosion_radius:
+				player.hit_by_rocket()
+			
+			get_parent().remove_child(self)
+			queue_free()
 	
 	update()
 
 func _draw():
-	# Preview explosion radius
-	draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
+	if not pushed:
+		# Preview explosion radius
+		draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
 	
 	if DebugInfo.visible:
 		draw_flight_prediction()
@@ -57,3 +60,13 @@ func draw_flight_prediction():
 		elif frames_passed > 1000:
 			# TODO Fix this ugly hack, maybe project on a normal
 			return
+
+func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
+	if area.is_in_group("counters"):
+		var original_velocity = velocity
+		velocity += (position - area.position).normalized() * 60
+		rotate(original_velocity.angle_to(velocity))
+		pushed = true
+		
+		area.get_parent().remove_child(area)
+		area.queue_free()

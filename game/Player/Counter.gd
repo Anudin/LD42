@@ -19,10 +19,6 @@ func init(position, target_position, explosion_radius):
 func _process(delta):
 	position += velocity * delta
 
-func _on_Counter_area_shape_entered(area_id, area, area_shape, self_shape):
-	if area.is_in_group("rockets"):
-		print("waddup")
-
 func _draw():
 	if DebugInfo.visible:
 		draw_circle(Vector2(0,0), explosion_radius, Color("11FFFF00"))

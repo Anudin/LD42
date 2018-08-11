@@ -32,4 +32,6 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -0.583969, -7.62939e-006 )
 shape = SubResource( 1 )
 
+[connection signal="area_shape_entered" from="." to="." method="_on_Rocket_area_shape_entered"]
+
 

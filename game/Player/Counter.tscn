@@ -3,7 +3,9 @@
 [ext_resource path="res://Player/Counter.gd" type="Script" id=1]
 [ext_resource path="res://Player/player.png" type="Texture" id=2]
 
-[node name="Counter" type="Area2D"]
+[node name="Counter" type="Area2D" groups=[
+"counters",
+]]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -20,7 +22,5 @@ speed = 300
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
-
-[connection signal="area_shape_entered" from="." to="." method="_on_Counter_area_shape_entered"]
 
 

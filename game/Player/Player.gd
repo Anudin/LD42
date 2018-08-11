@@ -2,6 +2,8 @@ extends Area2D
 
 var tscn_counter = preload("res://Player/Counter.tscn")
 
+# TODO Make counters correct fleight paths
+
 export var target_mode_length = 3
 export var target_timescale = .33
 export var target_cone_angle = 45
