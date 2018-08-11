@@ -38,7 +38,7 @@ func _ready():
 	timer_boost.one_shot = true
 	add_child(timer_boost)
 
-func _input(event):
+func _unhandled_input(event):
 	var movement_event_occured = true
 	
 	if event.is_pressed() and not timer_doubleclick.is_stopped():
@@ -61,12 +61,13 @@ func _input(event):
 		target_mode = not target_mode
 		
 		if target_mode:
-			Engine.time_scale = target_timescale
+			Engine.time_scale *= target_timescale
 		else:
-			Engine.time_scale = 1
-	elif target_mode and event.is_action_pressed("player_counter"):
+			Engine.time_scale *= 1 / target_timescale
+	elif target_mode and target_position != null and event.is_action_pressed("player_counter"):
 		counter()
-		Engine.time_scale = 1
+		target_mode = false
+		Engine.time_scale *= 1 / target_timescale
 	
 	if movement_event_occured:
 		timer_doubleclick.start()
@@ -148,6 +149,8 @@ func target():
 			to_local(target_position), 
 			Vector2(8,8)
 		), Color(1, 0, 0))
+	else:
+		target_position = null
 
 func counter():
 	var counter = tscn_counter.instance()

@@ -1,4 +1,4 @@
-extends Sprite
+extends Area2D
 
 # TODO Add ability to disrupt fly path
 # TODO Plan for changing paths

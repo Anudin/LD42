@@ -1,14 +1,35 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Rocket/rocket.png" type="Texture" id=1]
-[ext_resource path="res://Rocket/Rocket.gd" type="Script" id=2]
+[ext_resource path="res://Rocket/Rocket.gd" type="Script" id=1]
+[ext_resource path="res://Rocket/rocket.png" type="Texture" id=2]
 
-[node name="Rocket" type="Sprite" groups=[
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 29.6873, 15.5504 )
+
+[node name="Rocket" type="Area2D" index="0" groups=[
 "rockets",
 ]]
 
-texture = ExtResource( 1 )
-script = ExtResource( 2 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
 _sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+
+position = Vector2( -0.583969, -7.62939e-006 )
+shape = SubResource( 1 )
 
 
