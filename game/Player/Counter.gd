@@ -20,12 +20,11 @@ func init(position, ref_target, target_offset, explosion_radius):
 	collider.radius = explosion_radius
 	create_shape_owner(self)
 	shape_owner_add_shape(get_shape_owners()[0], collider)
+	
+	var target = ref_target.get_ref()
+	velocity = ((target.position + target_offset) - position).normalized() * speed
 
 func _process(delta):
-	if ref_target.get_ref():
-		var target = ref_target.get_ref()
-		velocity = ((target.position + target_offset) - position).normalized() * speed
-	
 	position += velocity * delta
 
 func _draw():

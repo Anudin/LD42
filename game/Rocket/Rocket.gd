@@ -82,7 +82,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):
 		# TODO Add rotation depending on velocity (strength + direction)
 		var original_velocity = velocity
-		velocity += (position - area.position).normalized() * velocity.length()
+		velocity = (position - area.position).normalized() * velocity.length()
 		
 		spin = original_velocity.angle_to(velocity)
 		spin /= abs(spin)

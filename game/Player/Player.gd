@@ -161,19 +161,8 @@ func target():
 	
 	# Provide aim point
 	if closest_rocket != null:
-		var rocket_to_mouse = get_global_mouse_position() - closest_rocket.position
-		var rocket_to_player = position - closest_rocket.position
-		
-		var direction = rocket_to_mouse.normalized()
-		var hit_angle = direction.angle_to(rocket_to_player)
-		
-		if hit_angle < -target_cone_angle:
-			direction = direction.rotated(hit_angle + target_cone_angle)
-		elif hit_angle > target_cone_angle:
-			direction = direction.rotated(hit_angle - target_cone_angle)
-		
 		target = closest_rocket
-		target_offset = direction * TARGET_VISIBLE_RADIUS
+		target_offset = get_global_mouse_position() - closest_rocket.position
 		
 		draw_rect(Rect2(
 			to_local(target.position + target_offset), 
