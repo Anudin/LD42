@@ -6,9 +6,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 15.3799, 7.95864 )
+extents = Vector2( 21.1087, 13.4595 )
 
-[node name="Rocket" type="Area2D" groups=[
+[node name="Rocket" type="Area2D" index="0" groups=[
 "rockets",
 ]]
 

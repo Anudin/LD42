@@ -1,5 +1,7 @@
 extends Area2D
 
+signal rocket_killed
+
 onready var player = get_node("/root/Main/Player")
 onready var target_position = player.position
 
@@ -79,6 +81,9 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		rotate(original_velocity.angle_to(velocity))
 		pushed = true
 		get_tree().queue_delete(area)
+	elif area.is_in_group("rockets"):
+		emit_signal("rocket_killed")
+		get_tree().queue_delete(self)
 
 func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)
