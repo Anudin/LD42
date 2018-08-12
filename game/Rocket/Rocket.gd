@@ -11,7 +11,6 @@ var acceleration = 1
 var tween_initial_acceleration
 
 var pushed = false
-var destroyed = false
 
 func _ready():
 	var target_angle = get_angle_to(target_position)
@@ -43,7 +42,7 @@ func _physics_process(delta):
 			if position.distance_to(player.position) < explosion_radius:
 				player.hit_by_rocket()
 			
-			destroy()
+			get_tree().queue_delete(self)
 	
 	update()
 
@@ -79,16 +78,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		velocity += (position - area.position).normalized() * 180
 		rotate(original_velocity.angle_to(velocity))
 		pushed = true
-		
-		area.get_parent().remove_child(area)
-		area.queue_free()
+		get_tree().queue_delete(area)
 
 func _on_VisibilityNotifier2D_screen_exited():
-	destroy()
-
-func destroy():
-	if not destroyed:
-		destroyed = true
-		
-		get_parent().remove_child(self)
-		queue_free()
+	get_tree().queue_delete(self)
