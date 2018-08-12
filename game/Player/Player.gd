@@ -8,7 +8,8 @@ onready var counter_timer = get_node("/root/Main/HUD/CounterTimer")
 
 export var target_mode_length = 3
 export var target_timescale = .1
-export var target_cone_angle = 45
+# TODO Cone Ausrichtung korrigieren
+export var target_cone_angle = 90
 export var boost_length_sec = 1
 export var boost_acceleration = 480
 export var boost_speed = 720

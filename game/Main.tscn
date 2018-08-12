@@ -48,6 +48,7 @@ _sections_unfolded = [ "Percent" ]
 
 z_index = 1
 _sections_unfolded = [ "Z Index" ]
+target_cone_angle = 90
 
 [node name="Firebases" type="Node2D" parent="." index="2"]
 

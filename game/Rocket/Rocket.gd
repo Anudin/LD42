@@ -79,7 +79,7 @@ func draw_flight_prediction():
 func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):
 		var original_velocity = velocity
-		velocity += (position - area.position).normalized() * 180
+		velocity = (position - area.position).normalized() * velocity.length()
 		rotate(original_velocity.angle_to(velocity))
 		pushed = true
 		get_tree().queue_delete(area)
