@@ -16,6 +16,7 @@ const TARGET_ACTIVATION_RADIUS = 200
 const TARGET_VISIBLE_RADIUS = 60
 
 var timer_doubleclick
+var last_event
 var timer_boost
 
 var max_speed = 180
@@ -44,7 +45,7 @@ func _ready():
 func _unhandled_input(event):
 	var movement_event_occured = true
 	
-	if event.is_pressed() and not timer_doubleclick.is_stopped():
+	if event.action_match(last_event) and event.is_pressed() and not timer_doubleclick.is_stopped():
 		timer_doubleclick.stop()
 		register_doubleclick_input_event(event)
 		return
@@ -73,6 +74,7 @@ func _unhandled_input(event):
 		Engine.time_scale *= 1 / target_timescale
 	
 	if movement_event_occured:
+		last_event = event
 		timer_doubleclick.start()
 
 func register_doubleclick_input_event(event):
