@@ -55,7 +55,7 @@ func _physics_process(delta):
 func _draw():
 	if not pushed:
 		# Preview explosion radius
-		draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.3))
+		draw_circle(to_local(target_position), 4, Color(1, 0, 0, 0.5))
 		draw_flight_prediction()
 
 func draw_flight_prediction():

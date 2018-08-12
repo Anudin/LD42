@@ -163,8 +163,10 @@ func target():
 		target = closest_rocket
 		target_offset = get_global_mouse_position() - closest_rocket.position
 		
+		draw_circle(to_local(target.position + target_offset), TARGET_VISIBLE_RADIUS, Color("11FFFF00"))
+		
 		draw_rect(Rect2(
-			to_local(target.position + target_offset), 
+			to_local(target.position + target_offset) - Vector2(4,4), 
 			Vector2(8,8)
 		), Color(1, 0, 0))
 	else:
