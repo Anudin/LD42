@@ -86,6 +86,9 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	elif area.is_in_group("rockets"):
 		emit_signal("rocket_killed")
 		get_tree().queue_delete(self)
+	elif area == player:
+		player.hit_by_rocket()
+		get_tree().queue_delete(self)
 
 func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)
