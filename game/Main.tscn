@@ -6,8 +6,9 @@
 [node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-explosion_radius = 32
 shrinking_rate = 2
+rocket_rate = 1
+explosion_radius = 32
 
 [node name="Player" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -16,5 +17,22 @@ _sections_unfolded = [ "Z Index" ]
 target_mode_length = 3
 target_timescale = 0.33
 target_cone_angle = 45
+
+[node name="Firebases" type="Node2D" parent="." index="1"]
+
+[node name="Position2D" type="Position2D" parent="Firebases" index="0"]
+
+[node name="Position2D2" type="Position2D" parent="Firebases" index="1"]
+
+position = Vector2( 1280, 720 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Position2D3" type="Position2D" parent="Firebases" index="2"]
+
+position = Vector2( 0, 720 )
+
+[node name="Position2D4" type="Position2D" parent="Firebases" index="3"]
+
+position = Vector2( 1280, 0 )
 
 
