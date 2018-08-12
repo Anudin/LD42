@@ -149,7 +149,6 @@ func target():
 	# DEBUG: Draw activation radius, line to player
 	for rocket in rockets:
 		if DebugInfo.visible:
-			draw_line(Vector2(0,0), to_local(rocket.position), Color("11FFFF00"))
 			draw_circle(to_local(rocket.position), TARGET_ACTIVATION_RADIUS, Color("11FFFF00"))
 		
 		var distance_to_mouse = get_global_mouse_position().distance_to(rocket.position)

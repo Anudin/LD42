@@ -28,5 +28,4 @@ func _process(delta):
 	position += velocity * delta
 
 func _draw():
-	if DebugInfo.visible:
-		draw_circle(Vector2(0,0), explosion_radius, Color("11FFFF00"))
+	draw_circle(Vector2(0,0), explosion_radius, Color("11FFFF00"))

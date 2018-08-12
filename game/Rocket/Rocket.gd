@@ -55,28 +55,11 @@ func _physics_process(delta):
 func _draw():
 	if not pushed:
 		# Preview explosion radius
-		draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.5))
-	
-	if DebugInfo.visible:
+		draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.3))
 		draw_flight_prediction()
 
 func draw_flight_prediction():
-	var frames_passed = 0
-	var preview_position = position
-	var timescale = Engine.time_scale
-	
-	while preview_position.distance_to(target_position) > 10:
-		if Engine.time_scale != timescale:
-			return
-		
-		frames_passed += 1
-		preview_position += velocity * (1.0/60) * timescale
-
-		if frames_passed % int(20 * (1 / timescale)) == 0:
-			draw_circle(to_local(preview_position), 5, Color("11FFFF00"))
-		elif frames_passed > 1000:
-			# TODO Fix this ugly hack, maybe project on a normal
-			return
+	draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("11FFFF00"), 2, false)
 
 func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):
