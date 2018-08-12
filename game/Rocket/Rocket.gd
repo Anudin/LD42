@@ -13,6 +13,7 @@ var acceleration = 1
 var tween_initial_acceleration
 
 var pushed = false
+var spin = 0
 
 func _ready():
 	connect("rocket_killed", player, "_on_rocket_killed")
@@ -39,6 +40,7 @@ func init(explosion_radius):
 
 func _physics_process(delta):
 	position += velocity * delta
+	rotate(spin * delta)
 	
 	if not pushed:
 		# TODO Fix this ugly hack, maybe project on a normal
@@ -81,11 +83,15 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		# TODO Add rotation depending on velocity (strength + direction)
 		var original_velocity = velocity
 		velocity += (position - area.position).normalized() * velocity.length()
-		rotate(original_velocity.angle_to(velocity))
+		
+		spin = original_velocity.angle_to(velocity)
+		spin /= abs(spin)
+		spin *= 2 * PI * (clamp(velocity.length() / 600, 0.1, 1) * 2)
+		
 		pushed = true
 		get_tree().queue_delete(area)
 		
-		# TODO Change yields to pause in pause mode
+		# TODO Change yields to pause in pause mode, maybe replace with normal timers
 		yield(get_tree().create_timer(3, false), "timeout")
 		get_tree().queue_delete(self)
 	elif area.is_in_group("rockets"):
