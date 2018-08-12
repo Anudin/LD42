@@ -3,7 +3,7 @@
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 
-[node name="Main" type="Node2D" index="0"]
+[node name="Main" type="Node2D"]
 
 script = ExtResource( 1 )
 shrinking_rate = 2
@@ -19,6 +19,9 @@ target_timescale = 0.33
 target_cone_angle = 45
 
 [node name="Firebases" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
+visible = false
 
 [node name="Position2D" type="Position2D" parent="Firebases" index="0"]
 

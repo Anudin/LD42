@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 16.1476
 
-[node name="Player" type="Area2D" index="0"]
+[node name="Player" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -18,6 +18,9 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
+target_mode_length = 3
+target_timescale = 0.33
+target_cone_angle = 45
 boost_length_sec = 1
 boost_acceleration = 480
 boost_speed = 720

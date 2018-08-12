@@ -2,6 +2,7 @@ extends Node2D
 
 var width = ProjectSettings.get_setting("display/window/size/width")
 var height = ProjectSettings.get_setting("display/window/size/height")
+var center = Vector2(width / 2, height / 2)
 
 var tscn_rocket = preload("res://Rocket/Rocket.tscn")
 
@@ -28,6 +29,11 @@ func _ready():
 	timer_rocket_spawn.wait_time = rocket_rate
 	timer_rocket_spawn.start()
 	timer_rocket_spawn.connect("timeout", self, "timeout_timer_rocket_spawn")
+
+func _physics_process(delta):
+	if center.distance_to(player.position) > playarea_radius:
+		player.acceleration = Vector2(0,0)
+		player.velocity = (center - player.position).normalized() * player.velocity.length()
 
 func timeout_timer_rocket_spawn():
 	if get_tree().get_nodes_in_group("rockets").size() < 4:

@@ -2,7 +2,7 @@ extends Area2D
 
 # TODO Remove out of screen
 
-export var speed = 500.0
+export var speed = 1500.0
 var explosion_radius
 
 var ref_target
