@@ -2,10 +2,12 @@ extends Area2D
 
 var tscn_counter = preload("res://Player/Counter.tscn")
 
+onready var counter_timer = get_node("/root/Main/HUD/CounterTimer")
+
 # TODO Make counters correct fleight paths
 
 export var target_mode_length = 3
-export var target_timescale = .33
+export var target_timescale = .1
 export var target_cone_angle = 45
 export var boost_length_sec = 1
 export var boost_acceleration = 480
@@ -28,6 +30,9 @@ var acceleration = Vector2(0,0)
 var target_mode = false
 var target = null
 var target_offset
+
+const COUNTER_TIMER_FILL_TIME = 2
+const COUNTER_TIMER_KILL_BONUS = 100
 
 func _ready():
 	target_cone_angle = deg2rad(target_cone_angle)
@@ -69,13 +74,18 @@ func _unhandled_input(event):
 		else:
 			Engine.time_scale *= 1 / target_timescale
 	elif target_mode and target != null and event.is_action_pressed("player_counter"):
-		counter()
-		target_mode = false
-		Engine.time_scale *= 1 / target_timescale
+		if counter_timer.value == 100:
+			counter_timer.value = 0
+			counter()
+			target_mode = false
+			Engine.time_scale *= 1 / target_timescale
 	
 	if movement_event_occured:
 		last_event = event
 		timer_doubleclick.start()
+
+func _on_rocket_killed():
+	counter_timer.value = 100
 
 func register_doubleclick_input_event(event):
 	var boost_activated = true
@@ -95,6 +105,8 @@ func register_doubleclick_input_event(event):
 		timer_boost.start()
 
 func _process(delta):
+	counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
+	
 	update()
 
 func _physics_process(delta):

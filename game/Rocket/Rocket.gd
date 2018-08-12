@@ -15,6 +15,8 @@ var tween_initial_acceleration
 var pushed = false
 
 func _ready():
+	connect("rocket_killed", player, "_on_rocket_killed")
+	
 	var target_angle = get_angle_to(target_position)
 	rotation = target_angle
 	velocity = Vector2(cos(target_angle), sin(target_angle)) * initial_velocity

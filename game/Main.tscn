@@ -3,22 +3,54 @@
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 shrinking_rate = 2
 rocket_rate = 1
 explosion_radius = 32
 
-[node name="Player" parent="." index="0" instance=ExtResource( 2 )]
+[node name="HUD" type="CanvasLayer" parent="." index="0"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="CounterTimer" type="ProgressBar" parent="HUD" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -110.0
+margin_top = -310.0
+margin_right = 110.0
+margin_bottom = -294.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 0
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = false
+percent_visible = false
+_sections_unfolded = [ "Percent" ]
+
+[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
 
 z_index = 1
 _sections_unfolded = [ "Z Index" ]
-target_mode_length = 3
-target_timescale = 0.33
-target_cone_angle = 45
+target_timescale = 0.1
 
-[node name="Firebases" type="Node2D" parent="." index="1"]
+[node name="Firebases" type="Node2D" parent="." index="2"]
 
 editor/display_folded = true
 visible = false
