@@ -51,7 +51,7 @@ func _physics_process(delta):
 			if position.distance_to(player.position) < explosion_radius:
 				player.hit_by_rocket()
 			
-			get_tree().queue_delete(self)
+			explode()
 	
 	update()
 
@@ -80,20 +80,20 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		
 		# TODO Change yields to pause in pause mode, maybe replace with normal timers
 		yield(get_tree().create_timer(3, false), "timeout")
-		get_tree().queue_delete(self)
+		explode()
 	elif area.is_in_group("rockets"):
 		emit_signal("rocket_killed")
 		explode()
 	elif area == player:
 		player.hit_by_rocket()
-		get_tree().queue_delete(self)
+		explode()
 
 func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)
 
 func explode():
 	collision_shape.disabled = true
-	velocity *= .3
+	velocity *= .15
 	animation_player.play("explode")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
