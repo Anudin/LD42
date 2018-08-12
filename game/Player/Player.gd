@@ -31,6 +31,7 @@ var target_mode = false
 var target = null
 var target_offset
 
+const COUNTER_TIMER_ACTIVE_TIME = 2
 const COUNTER_TIMER_FILL_TIME = 2
 const COUNTER_TIMER_KILL_BONUS = 100
 
@@ -67,14 +68,15 @@ func _unhandled_input(event):
 		movement_event_occured = false
 	
 	if event.is_action_pressed("player_target"):
-		target_mode = not target_mode
+		if target_mode or (not target_mode and counter_timer.value == 100):
+			target_mode = not target_mode
 		
-		if target_mode:
-			Engine.time_scale *= target_timescale
-		else:
-			Engine.time_scale *= 1 / target_timescale
+			if target_mode:
+				Engine.time_scale *= target_timescale
+			else:
+				Engine.time_scale *= 1 / target_timescale
 	elif target_mode and target != null and event.is_action_pressed("player_counter"):
-		if counter_timer.value == 100:
+		if counter_timer.value > 0:
 			counter_timer.value = 0
 			counter()
 			target_mode = false
@@ -105,7 +107,16 @@ func register_doubleclick_input_event(event):
 		timer_boost.start()
 
 func _process(delta):
-	counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
+	delta = delta / Engine.time_scale
+	
+	if not target_mode:
+		counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
+	else:
+		counter_timer.value -= (delta / COUNTER_TIMER_ACTIVE_TIME) * 60
+		
+		if counter_timer.value == 0:
+			target_mode = false
+			Engine.time_scale *= 1 / target_timescale
 	
 	update()
 
