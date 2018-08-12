@@ -78,11 +78,16 @@ func draw_flight_prediction():
 
 func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):
+		# TODO Add rotation depending on velocity (strength + direction)
 		var original_velocity = velocity
-		velocity = (position - area.position).normalized() * velocity.length()
+		velocity += (position - area.position).normalized() * velocity.length()
 		rotate(original_velocity.angle_to(velocity))
 		pushed = true
 		get_tree().queue_delete(area)
+		
+		# TODO Change yields to pause in pause mode
+		yield(get_tree().create_timer(3, false), "timeout")
+		get_tree().queue_delete(self)
 	elif area.is_in_group("rockets"):
 		emit_signal("rocket_killed")
 		get_tree().queue_delete(self)
