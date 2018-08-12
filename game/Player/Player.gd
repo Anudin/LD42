@@ -137,7 +137,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	velocity += acceleration * delta
-	print(velocity)
 	
 	if timer_boost.is_stopped():
 		velocity = velocity.clamped(max_speed)
