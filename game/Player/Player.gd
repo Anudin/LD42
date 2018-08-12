@@ -22,8 +22,8 @@ var timer_doubleclick
 var last_event
 var timer_boost
 
-var max_speed = 180
-var max_acceleration = 120
+var max_speed = 120
+var max_acceleration = 240
 
 var velocity = Vector2(0,0)
 var acceleration = Vector2(0,0)
@@ -50,23 +50,37 @@ func _ready():
 	add_child(timer_boost)
 
 func _unhandled_input(event):
-	var movement_event_occured = true
+	var movement_event_occured = false
 	
 	if event.action_match(last_event) and event.is_pressed() and not timer_doubleclick.is_stopped():
 		timer_doubleclick.stop()
 		register_doubleclick_input_event(event)
 		return
 	
-	if event.is_action_pressed("player_up"):
-		acceleration.y = -max_acceleration
-	elif event.is_action_pressed("player_down"):
-		acceleration.y = max_acceleration
-	elif event.is_action_pressed("player_left"):
-		acceleration.x = -max_acceleration
-	elif event.is_action_pressed("player_right"):
-		acceleration.x = max_acceleration
-	else:
-		movement_event_occured = false
+	if event.is_action("player_up"):
+		if event.is_pressed():
+			acceleration.y = -max_acceleration
+			movement_event_occured = true
+		elif timer_boost.is_stopped():
+			acceleration.y = 0
+	if event.is_action("player_down"):
+		if event.is_pressed():
+			acceleration.y = max_acceleration
+			movement_event_occured = true
+		elif timer_boost.is_stopped():
+			acceleration.y = 0
+	if event.is_action("player_left"):
+		if event.is_pressed():
+			acceleration.x = -max_acceleration
+			movement_event_occured = true
+		elif timer_boost.is_stopped():
+			acceleration.x = 0
+	if event.is_action("player_right"):
+		if event.is_pressed():
+			acceleration.x = max_acceleration
+			movement_event_occured = true
+		elif timer_boost.is_stopped():
+			acceleration.x = 0
 	
 	if event.is_action_pressed("player_target"):
 		if target_mode or (not target_mode and counter_timer.value == 100):
@@ -123,6 +137,7 @@ func _process(delta):
 
 func _physics_process(delta):
 	velocity += acceleration * delta
+	print(velocity)
 	
 	if timer_boost.is_stopped():
 		velocity = velocity.clamped(max_speed)

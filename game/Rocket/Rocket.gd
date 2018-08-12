@@ -6,7 +6,7 @@ onready var player = get_node("/root/Main/Player")
 onready var target_position = player.position
 
 var explosion_radius
-var initial_velocity = 60
+var initial_velocity = 30
 
 var velocity
 var acceleration = 1
