@@ -147,7 +147,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+"values": [ Color( 1, 0, 0.980392, 1 ), Color( 1, 0, 0, 1 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath(".:align")
@@ -311,6 +311,7 @@ _sections_unfolded = [ "Percent" ]
 
 [node name="Score" type="Label" parent="HUD" index="2"]
 
+modulate = Color( 1, 0, 0.980392, 1 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -347,6 +348,7 @@ blend_times = [  ]
 
 [node name="Pts" type="Label" parent="HUD" index="3"]
 
+modulate = Color( 1, 0, 0.980392, 1 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -371,6 +373,7 @@ _sections_unfolded = [ "Margin", "Rect", "Visibility", "custom_fonts" ]
 
 [node name="Wave" type="Label" parent="HUD" index="4"]
 
+modulate = Color( 1, 0, 0.980392, 1 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -395,6 +398,7 @@ _sections_unfolded = [ "Margin", "Rect", "Visibility", "custom_fonts" ]
 
 [node name="Wave2" type="Label" parent="HUD" index="5"]
 
+modulate = Color( 1, 0, 0.980392, 1 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
