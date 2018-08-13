@@ -10,6 +10,7 @@ var tscn_rocket = preload("res://Rocket/Rocket.tscn")
 
 onready var player = get_node("Player")
 onready var label_score = get_node("HUD/Score")
+onready var label_wave = get_node("HUD/Wave")
 
 export var shrinking_rate = 5
 export var rocket_rate = .25
@@ -83,6 +84,9 @@ func _process(delta):
 		
 		if wave < level_data.size() - 1:
 			wave += 1
+			label_wave.text = str(wave + 1)
+			get_node("AnimationPlayer").play("next_wave")
+			
 			time_bonus_factor += 1
 			load_level_data()
 		
