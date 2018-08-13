@@ -61,7 +61,6 @@ func reset_tween():
 		Tween.TRANS_EXPO, Tween.EASE_IN, 0)
 
 func interpolate_timeframe(timescale):
-	print(timescale)
 	Engine.time_scale = timescale
 
 func _unhandled_input(event):
@@ -140,8 +139,6 @@ func register_doubleclick_input_event(event):
 		timer_boost.start()
 
 func _process(delta):
-	print(Engine.time_scale)
-	
 	if not target_mode:
 		counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
 	else:
