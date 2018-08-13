@@ -10,7 +10,7 @@ func _on_player_died():
 	get_node("../Score/AnimationPlayer").play("expand_score")
 
 func _input(event):
-	if get_tree().paused and event.is_action_pressed("pause"):
+	if visible and event.is_action_pressed("restart"):
 		get_node("../Score/AnimationPlayer").play("reset_score_font")
 		yield(get_node("../Score/AnimationPlayer"), "animation_finished")
 	
