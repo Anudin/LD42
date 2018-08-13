@@ -8,6 +8,7 @@ var center = Vector2(width / 2, height / 2)
 
 onready var player = get_node("Player")
 onready var label_score = get_node("HUD/Score")
+onready var animator_score = get_node("HUD/Score/AnimationPlayer")
 onready var label_wave = get_node("HUD/Wave")
 
 export var shrinking_rate = 5
@@ -38,6 +39,7 @@ func load_level_data():
 
 func _on_rocket_killed():
 	score += (SCORE_BONUS_KILL / 2)
+	animator_score.play("bonus")
 
 func _ready():
 	randomize()
