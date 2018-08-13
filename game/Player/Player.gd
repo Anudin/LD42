@@ -40,6 +40,8 @@ const COUNTER_TIMER_KILL_BONUS = 100
 
 var tween_target_timescale
 
+onready var audio = get_node("AudioStreamPlayer2D")
+
 func _ready():
 	target_cone_angle = deg2rad(target_cone_angle)
 	
@@ -106,16 +108,22 @@ func _unhandled_input(event):
 			if target_mode:
 				reset_tween()
 				tween_target_timescale.start()
+				AudioServer.set_bus_effect_enabled(0, 0, true)
 			else:
 				tween_target_timescale.stop_all()
 				Engine.time_scale = 1
+				AudioServer.set_bus_effect_enabled(0, 0, false)
 	elif target_mode and target != null and event.is_action_pressed("player_counter"):
 		if counter_timer.value > 0:
 			counter_timer.value = 0
+			
+			audio.play()
+			
 			counter()
 			target_mode = false
 			tween_target_timescale.stop_all()
 			Engine.time_scale = 1
+			AudioServer.set_bus_effect_enabled(0, 0, false)
 	
 	if movement_event_occured:
 		last_event = event
@@ -159,6 +167,7 @@ func _process(delta):
 			target_mode = false
 			tween_target_timescale.stop_all()
 			Engine.time_scale = 1
+			AudioServer.set_bus_effect_enabled(0, 0, false)
 	
 	update()
 
