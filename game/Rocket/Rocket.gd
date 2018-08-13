@@ -44,7 +44,7 @@ func _ready():
 	
 	dead_timer = Timer.new()
 	add_child(dead_timer)
-	dead_timer.wait_time = 3
+	dead_timer.wait_time = 1.5
 	dead_timer.connect("timeout", self, "explode")
 
 func set_velocity(value):
