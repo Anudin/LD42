@@ -11,7 +11,7 @@ onready var label_score = get_node("HUD/Score")
 onready var animator_score = get_node("HUD/Score/AnimationPlayer")
 onready var label_wave = get_node("HUD/Wave")
 
-export var shrinking_rate = 5
+export var shrinking_rate = 10
 export var rocket_rate = .25
 export var explosion_radius = 32
 
@@ -27,11 +27,13 @@ const SCORE_BONUS_KILL = 25
 
 var score = 0
 var wave = 0
+var rocket_speed
 var rocket_count
 var time_bonus_factor = 1
 
 func load_level_data():
 	playarea_min_radius = level_data[wave]["min_radius"]
+	rocket_speed = level_data[wave]["rocket_speed"]
 	rocket_count = level_data[wave]["rocket_count"]
 	explosion_radius = level_data[wave]["rocket_radius"]
 	
@@ -74,7 +76,7 @@ func timeout_timer_rocket_spawn():
 	if get_tree().get_nodes_in_group("rockets").size() < rocket_count:
 		var firebases = get_node("Firebases").get_children()
 		
-		while not firebases[randi() % firebases.size()].spawn_rocket(explosion_radius):
+		while not firebases[randi() % firebases.size()].spawn_rocket(rocket_speed, explosion_radius):
 			pass
 
 func _process(delta):
@@ -89,7 +91,7 @@ func _process(delta):
 			label_wave.text = str(wave + 1)
 			get_node("AnimationPlayer").play("next_wave")
 			
-			time_bonus_factor += 1
+#			time_bonus_factor += 1
 			load_level_data()
 		else:
 			label_wave.text = "EXTRA"
@@ -111,10 +113,11 @@ func _draw():
 	draw_circle(Vector2(width / 2, height / 2), playarea_radius, Color("252525"))
 
 var level_data = [
+	# 1. Gen
 	{
-		"min_radius": 300,
+		"min_radius": 250,
 		"rocket_rate": 1,
-		"rocket_count": 4,
+		"rocket_count": 3,
 		"rocket_speed": 30,
 		"rocket_radius": 16
 	},
@@ -123,13 +126,101 @@ var level_data = [
 		"rocket_rate": 1,
 		"rocket_count": 4,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 16
 	},
 	{
-		"min_radius": 100,
+		"min_radius": 150,
+		"rocket_rate": 1,
+		"rocket_count": 5,
+		"rocket_speed": 30,
+		"rocket_radius": 16
+	},
+	# 2. Gen
+	{
+		"min_radius": 250,
 		"rocket_rate": 1,
 		"rocket_count": 4,
 		"rocket_speed": 30,
+		"rocket_radius": 32
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 1,
+		"rocket_count": 5,
+		"rocket_speed": 30,
+		"rocket_radius": 32
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 1,
+		"rocket_count": 5,
+		"rocket_speed": 30,
+		"rocket_radius": 32
+	},
+	# 3. Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 5,
+		"rocket_speed": 30,
+		"rocket_radius": 32
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 6,
+		"rocket_count": 5,
+		"rocket_speed": 30,
+		"rocket_radius": 32
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 6,
+		"rocket_count": 5,
+		"rocket_speed": 30,
+		"rocket_radius": 32
+	},
+	# 4. Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 45,
 		"rocket_radius": 48
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 6,
+		"rocket_count": 5,
+		"rocket_speed": 45,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 6,
+		"rocket_count": 5,
+		"rocket_speed": 45,
+		"rocket_radius": 48
+	},
+	# 5. Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 45,
+		"rocket_radius": 64
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 6,
+		"rocket_count": 5,
+		"rocket_speed": 45,
+		"rocket_radius": 64
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 6,
+		"rocket_count": 5,
+		"rocket_speed": 45,
+		"rocket_radius": 64
 	}
 ]

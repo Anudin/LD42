@@ -214,7 +214,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 [node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-shrinking_rate = 5
+shrinking_rate = 10
 rocket_rate = 0.25
 explosion_radius = 32
 

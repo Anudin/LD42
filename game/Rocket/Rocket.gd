@@ -50,9 +50,6 @@ func _ready():
 func set_velocity(value):
 	velocity = value
 
-func init(explosion_radius):
-	self.explosion_radius = explosion_radius
-
 func _physics_process(delta):
 	position += velocity * delta
 	rotate(spin * delta)

@@ -15,10 +15,11 @@ func _ready():
 func make_available():
 	available = true
 
-func spawn_rocket(explosion_radius):
+func spawn_rocket(speed, explosion_radius):
 	if available:
 		var rocket = tscn_rocket.instance()
-		rocket.init(explosion_radius)
+		rocket.initial_velocity = speed
+		rocket.explosion_radius = explosion_radius
 		rocket.position = position
 		get_node("/root/Main").add_child(rocket)
 		

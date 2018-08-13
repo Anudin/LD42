@@ -1,3 +1,3 @@
 extends Node
 
-const TRESHOLD_DOUBLECLICK = .25
+const TRESHOLD_DOUBLECLICK = .35
