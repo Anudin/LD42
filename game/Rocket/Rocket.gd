@@ -20,9 +20,11 @@ var spin = 0
 
 var dead_timer
 
-onready var audio = get_node("AudioStreamPlayer2D")
+onready var audio_startup = get_node("AudioStartup")
+onready var audio_explode = get_node("AudioExplode")
 
 func _ready():
+	audio_startup.play()
 	connect("rocket_killed", get_node("/root/Main"), "_on_rocket_killed")
 	connect("rocket_killed", player, "_on_rocket_killed")
 	
@@ -100,7 +102,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)
 
 func explode():
-	audio.play()
+	audio_explode.play()
 	collision_shape.disabled = true
 	velocity *= .15
 	animation_player.play("explode")

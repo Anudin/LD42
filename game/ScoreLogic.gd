@@ -1,5 +1,8 @@
 extends Node2D
 
+func _ready():
+	Engine.time_scale = 1
+
 func _on_player_died():
 	get_tree().paused = true
 	visible = true
