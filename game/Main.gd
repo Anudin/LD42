@@ -6,8 +6,6 @@ var width = ProjectSettings.get_setting("display/window/size/width")
 var height = ProjectSettings.get_setting("display/window/size/height")
 var center = Vector2(width / 2, height / 2)
 
-var tscn_rocket = preload("res://Rocket/Rocket.tscn")
-
 onready var player = get_node("Player")
 onready var label_score = get_node("HUD/Score")
 onready var label_wave = get_node("HUD/Wave")
@@ -73,7 +71,9 @@ func _physics_process(delta):
 func timeout_timer_rocket_spawn():
 	if get_tree().get_nodes_in_group("rockets").size() < rocket_count:
 		var firebases = get_node("Firebases").get_children()
-		add_rocket(firebases[randi() % firebases.size()].position)
+		
+		while not firebases[randi() % firebases.size()].spawn_rocket(explosion_radius):
+			pass
 
 func _process(delta):
 	score += delta * time_bonus_factor
@@ -103,12 +103,6 @@ func _process(delta):
 		playarea_radius -= delta * shrinking_rate
 	
 	update()
-
-func add_rocket(position):
-	var rocket = tscn_rocket.instance()
-	rocket.init(explosion_radius)
-	rocket.position = position
-	add_child(rocket)
 
 func _draw():
 	draw_rect(Rect2(Vector2(0,0), Vector2(width, height)), Color("212121"), true)
