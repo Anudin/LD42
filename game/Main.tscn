@@ -6,8 +6,8 @@
 [node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-shrinking_rate = 20
-rocket_rate = 1
+shrinking_rate = 5
+rocket_rate = 0.25
 explosion_radius = 32
 
 [node name="HUD" type="CanvasLayer" parent="." index="0"]
