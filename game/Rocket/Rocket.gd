@@ -8,7 +8,7 @@ onready var target_position = player.position
 onready var collision_shape = get_node("CollisionShape2D")
 onready var animation_player = get_node("AnimationPlayer")
 
-var explosion_radius
+var explosion_radius = 16
 var initial_velocity = 30
 
 var velocity
