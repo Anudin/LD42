@@ -89,6 +89,8 @@ func _process(delta):
 			
 			time_bonus_factor += 1
 			load_level_data()
+		else:
+			label_wave.text = "EXTRA"
 		
 		tween_expand.remove_all()
 		tween_expand.interpolate_property(self,
