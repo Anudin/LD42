@@ -37,8 +37,7 @@ var shaking = false
 
 func _on_rocket_exploded(rocket):
 	if rocket.get_ref() and not shaking:
-		var r_ang = deg2rad(randi() % 360)
-		var goal = Vector2(cos(r_ang), sin(r_ang)) * 10
+		var goal = -(center - rocket.get_ref().position).normalized() * 10
 		
 		tween_shake.remove_all()
 		tween_shake.interpolate_property(camera, "offset", 
