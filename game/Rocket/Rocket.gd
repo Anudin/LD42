@@ -100,7 +100,12 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)
 
+var dead = false
+
 func explode(kill = false):
+	if dead:
+		return
+	
 	emit_signal("rocket_exploded")
 	
 	audio_explode.play()
@@ -110,7 +115,16 @@ func explode(kill = false):
 	if not kill:
 		animation_player.play("explode")
 	else:
+		get_node("Particles2D").emitting = true
 		animation_player.play("explode_kill")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	get_tree().queue_delete(self)
+	set_process(false)
+	set_physics_process(false)
+	dead = true
+	
+	var timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = .3
+	timer.start()
+	timer.connect("timeout", get_tree(), "queue_delete", [self])

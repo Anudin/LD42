@@ -121,8 +121,6 @@ func timeout_timer_rocket_spawn():
 			pass
 
 func _process(delta):
-	print(camera.offset)
-	
 	score += delta * time_bonus_factor
 	label_score.text = str(int(score))
 	
