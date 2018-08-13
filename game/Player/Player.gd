@@ -7,7 +7,7 @@ onready var counter_timer = get_node("/root/Main/HUD/CounterTimer")
 # TODO Make counters correct fleight paths
 
 export var target_mode_length = 3
-export var target_timescale = .1
+export var target_timescale = .05
 # TODO Cone Ausrichtung korrigieren
 export var target_cone_angle = 90
 export var boost_length_sec = 1
@@ -36,6 +36,8 @@ const COUNTER_TIMER_ACTIVE_TIME = 2
 const COUNTER_TIMER_FILL_TIME = 2
 const COUNTER_TIMER_KILL_BONUS = 100
 
+var tween_target_timescale
+
 func _ready():
 	target_cone_angle = deg2rad(target_cone_angle)
 	
@@ -48,6 +50,19 @@ func _ready():
 	timer_boost.wait_time = boost_length_sec
 	timer_boost.one_shot = true
 	add_child(timer_boost)
+	
+	tween_target_timescale = Tween.new()
+	add_child(tween_target_timescale)
+	reset_tween()
+
+func reset_tween():
+	tween_target_timescale.interpolate_method(self, "interpolate_timeframe",
+		1, target_timescale, .3,
+		Tween.TRANS_EXPO, Tween.EASE_IN, 0)
+
+func interpolate_timeframe(timescale):
+	print(timescale)
+	Engine.time_scale = timescale
 
 func _unhandled_input(event):
 	var movement_event_occured = false
@@ -87,15 +102,18 @@ func _unhandled_input(event):
 			target_mode = not target_mode
 		
 			if target_mode:
-				Engine.time_scale *= target_timescale
+				reset_tween()
+				tween_target_timescale.start()
 			else:
-				Engine.time_scale *= 1 / target_timescale
+				tween_target_timescale.stop_all()
+				Engine.time_scale = 1
 	elif target_mode and target != null and event.is_action_pressed("player_counter"):
 		if counter_timer.value > 0:
 			counter_timer.value = 0
 			counter()
 			target_mode = false
-			Engine.time_scale *= 1 / target_timescale
+			tween_target_timescale.stop_all()
+			Engine.time_scale = 1
 	
 	if movement_event_occured:
 		last_event = event
@@ -122,7 +140,7 @@ func register_doubleclick_input_event(event):
 		timer_boost.start()
 
 func _process(delta):
-	delta = delta / Engine.time_scale
+	print(Engine.time_scale)
 	
 	if not target_mode:
 		counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
@@ -131,7 +149,8 @@ func _process(delta):
 		
 		if counter_timer.value == 0:
 			target_mode = false
-			Engine.time_scale *= 1 / target_timescale
+			tween_target_timescale.stop_all()
+			Engine.time_scale = 1
 	
 	update()
 
