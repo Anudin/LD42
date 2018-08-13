@@ -8,14 +8,17 @@ var tscn_rocket = preload("res://Rocket/Rocket.tscn")
 
 onready var player = get_node("Player")
 
-export var shrinking_rate = 2
+export var shrinking_rate = 20
 export var rocket_rate = 1
 export var explosion_radius = 32
 
 var playarea_radius
-var playarea_min_radius = 200
+var playarea_initial_radius
+var playarea_min_radius = 150
 
 var timer_rocket_spawn
+
+var tween_expand
 
 func _ready():
 	randomize()
@@ -23,12 +26,16 @@ func _ready():
 	
 	player.position = Vector2(width / 2, height / 2)
 	playarea_radius = height / 2
+	playarea_initial_radius = playarea_radius
 	
 	timer_rocket_spawn = Timer.new()
 	add_child(timer_rocket_spawn)
 	timer_rocket_spawn.wait_time = rocket_rate
 	timer_rocket_spawn.start()
 	timer_rocket_spawn.connect("timeout", self, "timeout_timer_rocket_spawn")
+	
+	tween_expand = Tween.new()
+	add_child(tween_expand)
 
 func _physics_process(delta):
 	if center.distance_to(player.position) > playarea_radius:
@@ -41,7 +48,17 @@ func timeout_timer_rocket_spawn():
 		add_rocket(firebases[randi() % firebases.size()].position)
 
 func _process(delta):
-	playarea_radius -= delta * shrinking_rate
+	if playarea_radius < playarea_min_radius:
+		tween_expand.remove_all()
+		tween_expand.interpolate_property(self,
+			NodePath("playarea_radius"),
+			playarea_radius,
+			playarea_initial_radius, 
+			1, Tween.TRANS_EXPO, Tween.EASE_IN, 0)
+		tween_expand.start()
+	elif not tween_expand.is_active():
+		playarea_radius -= delta * shrinking_rate
+	
 	update()
 	
 	if playarea_radius < playarea_min_radius:

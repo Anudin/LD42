@@ -6,7 +6,7 @@
 [node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-shrinking_rate = 2
+shrinking_rate = 20
 rocket_rate = 1
 explosion_radius = 32
 
