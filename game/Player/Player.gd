@@ -123,6 +123,7 @@ func _unhandled_input(event):
 
 func _on_rocket_killed():
 	counter_timer.value = 100
+	get_node("/root/Main/HUD/CounterTimer/AnimationPlayer").play("flash")
 
 func register_doubleclick_input_event(event):
 	var boost_activated = true
@@ -146,7 +147,11 @@ func _process(delta):
 	delta = delta / Engine.time_scale
 	
 	if not target_mode:
+		var prev = counter_timer.value
 		counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
+		
+		if counter_timer.value != prev and counter_timer.value == 100:
+			get_node("/root/Main/HUD/CounterTimer/AnimationPlayer").play("flash")
 	else:
 		counter_timer.value -= (delta / COUNTER_TIMER_ACTIVE_TIME) * 60
 		
