@@ -38,7 +38,7 @@ func load_level_data():
 	print(playarea_min_radius)
 
 func _on_rocket_killed():
-	score += SCORE_BONUS_KILL
+	score += (SCORE_BONUS_KILL / 2)
 
 func _ready():
 	randomize()

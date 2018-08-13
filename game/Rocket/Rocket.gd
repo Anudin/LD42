@@ -82,7 +82,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		# TODO Change yields to pause in pause mode, maybe replace with normal timers
 		yield(get_tree().create_timer(3, false), "timeout")
 		explode()
-	elif area.is_in_group("rockets") and pushed:
+	elif area.is_in_group("rockets") and (pushed or area.pushed):
 		emit_signal("rocket_killed")
 		explode()
 	elif area == player:
