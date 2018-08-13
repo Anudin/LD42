@@ -20,7 +20,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -222,7 +222,7 @@ size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
 text = "Try to hit enemies with other enemies...
 Post your highscore and wave later!
-Press any key to start."
+Press any key to start. Tip: Move early or die early."
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
