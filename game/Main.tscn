@@ -1,7 +1,75 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ScoreLogic.gd" type="Script" id=2]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "expand_score"
+length = 0.4
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1200.0, 620.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 40.0, 340.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:margin_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1240.0, 660.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 54.0, 354.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:rect_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 4, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 4, 4 ) ]
+}
 
 [node name="Main" type="Node2D" index="0"]
 
@@ -10,15 +78,49 @@ shrinking_rate = 5
 rocket_rate = 0.25
 explosion_radius = 32
 
-[node name="HUD" type="CanvasLayer" parent="." index="0"]
+[node name="CanvasModulate" type="CanvasModulate" parent="." index="0"]
 
+color = Color( 1, 1, 1, 1 )
+
+[node name="HUD" type="CanvasLayer" parent="." index="1"]
+
+pause_mode = 2
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+_sections_unfolded = [ "Pause" ]
 
-[node name="CounterTimer" type="ProgressBar" parent="HUD" index="0"]
+[node name="ScoreLogic" type="Node2D" parent="HUD" index="0"]
+
+visible = false
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="HUD/ScoreLogic" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 230.0
+margin_top = 460.0
+margin_right = 435.0
+margin_bottom = 474.0
+rect_scale = Vector2( 4, 4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Press SPACE or click to continue"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="CounterTimer" type="ProgressBar" parent="HUD" index="1"]
 
 anchor_left = 0.5
 anchor_top = 0.5
@@ -44,16 +146,16 @@ rounded = false
 percent_visible = false
 _sections_unfolded = [ "Percent" ]
 
-[node name="Score" type="Label" parent="HUD" index="1"]
+[node name="Score" type="Label" parent="HUD" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1210.0
-margin_top = 30.0
-margin_right = 1250.0
-margin_bottom = 44.0
+margin_left = 1200.0
+margin_top = 40.0
+margin_right = 1240.0
+margin_bottom = 54.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -64,15 +166,26 @@ text = "0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Rect", "custom_fonts" ]
 
-[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/Score" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/expand_score = SubResource( 1 )
+blend_times = [  ]
+
+[node name="Player" parent="." index="2" instance=ExtResource( 3 )]
 
 z_index = 1
 _sections_unfolded = [ "Z Index" ]
 target_timescale = 0.05
 target_cone_angle = 90
 
-[node name="Firebases" type="Node2D" parent="." index="2"]
+[node name="Firebases" type="Node2D" parent="." index="3"]
 
 editor/display_folded = true
 visible = false

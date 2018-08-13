@@ -1,5 +1,7 @@
 extends Area2D
 
+signal player_died
+
 var tscn_counter = preload("res://Player/Counter.tscn")
 
 onready var counter_timer = get_node("/root/Main/HUD/CounterTimer")
@@ -163,7 +165,7 @@ func _physics_process(delta):
 	position += velocity * delta
 
 func hit_by_rocket():
-	print("fuck me")
+	emit_signal("player_died")
 
 func _draw():
 	if target_mode:

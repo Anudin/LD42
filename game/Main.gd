@@ -44,6 +44,7 @@ func _ready():
 	randomize()
 	DebugInfo.visible = true
 	
+	player.connect("player_died", get_node("HUD/ScoreLogic"), "_on_player_died")
 	player.position = Vector2(width / 2, height / 2)
 	playarea_radius = height / 2
 	playarea_initial_radius = playarea_radius
