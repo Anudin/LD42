@@ -56,6 +56,7 @@ func _ready():
 	reset_tween()
 
 func reset_tween():
+	tween_target_timescale.remove_all()
 	tween_target_timescale.interpolate_method(self, "interpolate_timeframe",
 		1, target_timescale, .3,
 		Tween.TRANS_EXPO, Tween.EASE_IN, 0)
