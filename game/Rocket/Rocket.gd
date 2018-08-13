@@ -18,6 +18,8 @@ var tween_initial_acceleration
 var pushed = false
 var spin = 0
 
+var dead_timer
+
 func _ready():
 	connect("rocket_killed", get_node("/root/Main"), "_on_rocket_killed")
 	connect("rocket_killed", player, "_on_rocket_killed")
@@ -35,6 +37,11 @@ func _ready():
 		Tween.EASE_IN,
 		0)
 	tween_initial_acceleration.start()
+	
+	dead_timer = Timer.new()
+	add_child(dead_timer)
+	dead_timer.wait_time = 3
+	dead_timer.connect("timeout", self, "explode")
 
 func set_velocity(value):
 	velocity = value
@@ -79,9 +86,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		pushed = true
 		get_tree().queue_delete(area)
 		
-		# TODO Change yields to pause in pause mode, maybe replace with normal timers
-		yield(get_tree().create_timer(3, false), "timeout")
-		explode()
+		dead_timer.start()
 	elif area.is_in_group("rockets") and (pushed or area.pushed):
 		emit_signal("rocket_killed")
 		explode()
