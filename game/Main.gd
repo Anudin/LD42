@@ -105,6 +105,7 @@ func add_rocket(position):
 	add_child(rocket)
 
 func _draw():
+	draw_rect(Rect2(Vector2(0,0), Vector2(width, height)), Color("212121"), true)
 	draw_circle(Vector2(width / 2, height / 2), playarea_radius, Color("333333"))
 
 var level_data = [
