@@ -52,7 +52,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 
-[node name="Rocket" type="Area2D" index="0" groups=[
+[node name="Rocket" type="Area2D" groups=[
 "rockets",
 ]]
 

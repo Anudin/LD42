@@ -19,6 +19,7 @@ var pushed = false
 var spin = 0
 
 func _ready():
+	connect("rocket_killed", get_node("/root/Main"), "_on_rocket_killed")
 	connect("rocket_killed", player, "_on_rocket_killed")
 	
 	var target_angle = get_angle_to(target_position)

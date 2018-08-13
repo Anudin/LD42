@@ -7,6 +7,7 @@ var center = Vector2(width / 2, height / 2)
 var tscn_rocket = preload("res://Rocket/Rocket.tscn")
 
 onready var player = get_node("Player")
+onready var label_score = get_node("HUD/Score")
 
 export var shrinking_rate = 20
 export var rocket_rate = 1
@@ -19,6 +20,13 @@ var playarea_min_radius = 100
 var timer_rocket_spawn
 var tween_expand
 var expanding = false
+
+const SCORE_BONUS_KILL = 25
+
+var score = 0
+
+func _on_rocket_killed():
+	score += (SCORE_BONUS_KILL / 2)
 
 func _ready():
 	randomize()
@@ -51,7 +59,10 @@ func timeout_timer_rocket_spawn():
 		var firebases = get_node("Firebases").get_children()
 		add_rocket(firebases[randi() % firebases.size()].position)
 
-func _process(delta):	
+func _process(delta):
+	score += delta
+	label_score.text = str(int(score))
+	
 	if not expanding and  playarea_radius < playarea_min_radius:
 		expanding = true
 		
