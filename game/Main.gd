@@ -6,6 +6,7 @@ var width = ProjectSettings.get_setting("display/window/size/width")
 var height = ProjectSettings.get_setting("display/window/size/height")
 var center = Vector2(width / 2, height / 2)
 
+onready var camera = get_node("Camera")
 onready var player = get_node("Player")
 onready var label_score = get_node("HUD/Score")
 onready var animator_score = get_node("HUD/Score/AnimationPlayer")
@@ -31,17 +32,55 @@ var rocket_speed
 var rocket_count
 var time_bonus_factor = 1
 
+var tween_shake
+var shaking = false
+
+func _on_rocket_exploded(rocket):
+	if rocket.get_ref() and not shaking:
+		var r_ang = deg2rad(randi() % 360)
+		var goal = Vector2(cos(r_ang), sin(r_ang)) * 10
+		
+		tween_shake.remove_all()
+		tween_shake.interpolate_property(camera, "offset", 
+			Vector2(0,0), goal, 
+			.2, 
+			Tween.TRANS_BOUNCE, Tween.EASE_IN)
+		tween_shake.interpolate_property(camera, "offset", 
+			goal, Vector2(0,0), 
+			.2, 
+			Tween.TRANS_BOUNCE, Tween.EASE_IN, .2)
+		
+		tween_shake.start()
+
 func load_level_data():
 	playarea_min_radius = level_data[wave]["min_radius"]
 	rocket_speed = level_data[wave]["rocket_speed"]
 	rocket_count = level_data[wave]["rocket_count"]
 	explosion_radius = level_data[wave]["rocket_radius"]
-	
-	print(playarea_min_radius)
 
 func _on_rocket_killed():
 	score += (SCORE_BONUS_KILL / 2)
 	animator_score.play("bonus")
+	
+	shaking = true
+	
+	var r_ang = deg2rad(randi() % 360)
+	var goal = Vector2(cos(r_ang), sin(r_ang)) * 50
+	
+	tween_shake.remove_all()
+	tween_shake.interpolate_property(camera, "offset", 
+		Vector2(0,0), goal,
+		.4, 
+		Tween.TRANS_BOUNCE, Tween.EASE_IN)
+	tween_shake.interpolate_property(camera, "offset", 
+		goal, Vector2(0,0), 
+		.4, 
+		Tween.TRANS_BOUNCE, Tween.EASE_IN, .4)
+	
+	tween_shake.start()
+	
+	yield(tween_shake, "tween_completed")
+	shaking = false
 
 func _ready():
 	randomize()
@@ -62,6 +101,9 @@ func _ready():
 	add_child(tween_expand)
 	tween_expand.connect("tween_completed", self, "expand_completed")
 	
+	tween_shake = Tween.new()
+	add_child(tween_shake)
+	
 	load_level_data()
 
 func expand_completed(object, key):
@@ -80,6 +122,8 @@ func timeout_timer_rocket_spawn():
 			pass
 
 func _process(delta):
+	print(camera.offset)
+	
 	score += delta * time_bonus_factor
 	label_score.text = str(int(score))
 	
