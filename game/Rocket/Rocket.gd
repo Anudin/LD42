@@ -93,7 +93,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		dead_timer.start()
 	elif area.is_in_group("rockets") and (pushed or area.pushed):
 		emit_signal("rocket_killed")
-		explode()
+		explode(true)
 	elif area == player:
 		player.hit_by_rocket()
 		explode()
@@ -101,11 +101,15 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)
 
-func explode():
+func explode(kill = false):
 	audio_explode.play()
 	collision_shape.disabled = true
 	velocity *= .15
-	animation_player.play("explode")
+	
+	if not kill:
+		animation_player.play("explode")
+	else:
+		animation_player.play("explode_kill")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	get_tree().queue_delete(self)
