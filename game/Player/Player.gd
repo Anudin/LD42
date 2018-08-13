@@ -142,6 +142,9 @@ func register_doubleclick_input_event(event):
 		timer_boost.start()
 
 func _process(delta):
+	# Available charge must be reduced in realtime
+	delta = delta / Engine.time_scale
+	
 	if not target_mode:
 		counter_timer.value += (delta / COUNTER_TIMER_FILL_TIME) * 60
 	else:
