@@ -10,3 +10,5 @@ func _input(event):
 			get_tree().paused = false
 			visible = false
 			get_node("../../CanvasModulate").color = Color(1,1,1)
+	elif visible and event.is_action_pressed("exit"):
+		get_tree().quit()
