@@ -94,8 +94,9 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		emit_signal("rocket_killed")
 		explode(true)
 	elif area == player:
-		player.hit_by_rocket()
 		explode()
+		yield(get_tree().create_timer(.25, false), "timeout")
+		player.hit_by_rocket()
 
 func _on_VisibilityNotifier2D_screen_exited():
 	get_tree().queue_delete(self)

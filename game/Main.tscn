@@ -211,7 +211,7 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 shrinking_rate = 10
@@ -497,8 +497,7 @@ _sections_unfolded = [ "Margin", "Rect", "Visibility", "custom_fonts" ]
 [node name="Player" parent="." index="5" instance=ExtResource( 7 )]
 
 position = Vector2( 250, 100 )
-z_index = 1
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 target_timescale = 0.05
 target_cone_angle = 90
 
