@@ -8,7 +8,7 @@ var timer_cooldown
 func _ready():
 	timer_cooldown = Timer.new()
 	add_child(timer_cooldown)
-	timer_cooldown.wait_time = .5
+	timer_cooldown.wait_time = 1
 	timer_cooldown.one_shot = true
 	timer_cooldown.connect("timeout", self, "make_available")
 

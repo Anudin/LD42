@@ -71,7 +71,7 @@ func _draw():
 		draw_flight_prediction()
 
 func draw_flight_prediction():
-	draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("11FFFF00"), 2, false)
+	draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("33FFFF00"), 2, false)
 
 func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):

@@ -169,7 +169,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 shrinking_rate = 5
@@ -427,5 +427,37 @@ position = Vector2( 1280, 350 )
 [node name="RocketSpawn8" parent="Firebases" index="7" instance=ExtResource( 5 )]
 
 position = Vector2( 0, 350 )
+
+[node name="RocketSpawn9" parent="Firebases" index="8" instance=ExtResource( 5 )]
+
+position = Vector2( 0, 530 )
+
+[node name="RocketSpawn10" parent="Firebases" index="9" instance=ExtResource( 5 )]
+
+position = Vector2( 330, 720 )
+
+[node name="RocketSpawn11" parent="Firebases" index="10" instance=ExtResource( 5 )]
+
+position = Vector2( 970, 720 )
+
+[node name="RocketSpawn12" parent="Firebases" index="11" instance=ExtResource( 5 )]
+
+position = Vector2( 1280, 530 )
+
+[node name="RocketSpawn13" parent="Firebases" index="12" instance=ExtResource( 5 )]
+
+position = Vector2( 1280, 180 )
+
+[node name="RocketSpawn14" parent="Firebases" index="13" instance=ExtResource( 5 )]
+
+position = Vector2( 970, 0 )
+
+[node name="RocketSpawn15" parent="Firebases" index="14" instance=ExtResource( 5 )]
+
+position = Vector2( 290, 0 )
+
+[node name="RocketSpawn16" parent="Firebases" index="15" instance=ExtResource( 5 )]
+
+position = Vector2( 0, 170 )
 
 
