@@ -34,6 +34,8 @@ extends Node2D
 
 # 13. Tools für verwaiste Dateien und Referenzen nutzen
 
+# 14. get_node can be replaced with $ ...
+
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
 
 var width = ProjectSettings.get_setting("display/window/size/width")
