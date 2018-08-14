@@ -3,6 +3,9 @@ extends Node
 var visible = false
 var timescale_modified = false
 
+#func _ready():
+#	OS.window_fullscreen = true
+
 func _input(event):
 	if event.is_action_pressed("debug_toggle"):
 		visible = not visible
