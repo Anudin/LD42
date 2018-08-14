@@ -71,10 +71,6 @@ var time_bonus_factor = 1
 var tween_shake
 var shaking = false
 
-func _input(event):
-	if event.is_action_pressed("toggle_fullscreen"):
-		OS.window_fullscreen = !OS.window_fullscreen
-
 func _on_rocket_exploded(rocket):
 	if rocket.get_ref() and not shaking:
 		var goal = -(center - rocket.get_ref().position).normalized() * 10
