@@ -16,6 +16,7 @@ extends Node2D
 # - Nicht einfach Verhalten vorraus setzen, entsprechende Methoden / Signale aufrufen
 
 # 6. Szenen, Nodes etc. so früh wie möglich / an einer Stelle laden
+# Damit werden auch Fehler durch falsche Pfade möglicherweise sichtbar
 
 # 7. Wie kann ich von externen Abhängigkeiten abstrahieren, vor allem auch "Main" Szene
 
