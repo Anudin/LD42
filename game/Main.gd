@@ -1,5 +1,24 @@
 extends Node2D
 
+# 1. Timer auf dem  SceneTree sind extrem gefährlich. Nur überlegt nutzen.
+
+# 2. Niemals die Auflösung einer Kollision für eine andere Komponente übernehmen.
+
+# 3. Engine.time_scale lieber multiplizieren statt absolut zu setzen, so kann an 
+# mehreren Stellen manipuliert werden.
+
+# 4. Gameplay code sollte IDR auf unhandled_input reagieren
+
+# 5. Die meisten Komponenten benötigen eine State Machine. Im Todesfall bietet sich an:
+# - CollisionShape deaktivieren
+# - Status Flag setzen
+#	- Alle Methoden sollten auf Status Flag reagieren
+# - Nicht einfach Verhalten vorraus setzen, entsprechende Methoden / Signale aufrufen
+
+# 6. Szenen, Nodes etc. so früh wie möglich / an einer Stelle laden
+
+# 7. Wie kann ich von externen Abhängigkeiten abstrahieren
+
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
 
 var width = ProjectSettings.get_setting("display/window/size/width")
