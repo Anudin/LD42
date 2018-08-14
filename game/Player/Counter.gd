@@ -10,6 +10,8 @@ var target_offset
 
 var velocity
 
+var shape_owner
+
 func init(position, ref_target, target_offset, explosion_radius):
 	self.ref_target = ref_target
 	self.target_offset = target_offset
@@ -18,7 +20,7 @@ func init(position, ref_target, target_offset, explosion_radius):
 	
 	var collider = CircleShape2D.new()
 	collider.radius = explosion_radius
-	create_shape_owner(self)
+	shape_owner = create_shape_owner(self)
 	shape_owner_add_shape(get_shape_owners()[0], collider)
 	
 	var target = ref_target.get_ref()

@@ -87,6 +87,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		spin *= 2 * PI * (clamp(velocity.length() / 600, 0.1, 1) * 2)
 		
 		pushed = true
+		area.shape_owner_set_disabled(area.shape_owner, true)
 		get_tree().queue_delete(area)
 		
 		dead_timer.start()
