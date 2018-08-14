@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://ui/Tutorial.gd" type="Script" id=1]
 [ext_resource path="res://ui/tutorial.png" type="Texture" id=2]
 [ext_resource path="res://fonts/VT323-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Rocket/ExplosionParticles.tres" type="Material" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -251,5 +252,28 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Visibility", "custom_fonts" ]
+
+[node name="RocketExplosion" type="Particles2D" parent="." index="10"]
+
+position = Vector2( -100, -100 )
+emitting = false
+amount = 8
+lifetime = 1.0
+one_shot = true
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = true
+draw_order = 0
+process_material = ExtResource( 4 )
+texture = null
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Process Material", "Time" ]
 
 
