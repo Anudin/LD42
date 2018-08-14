@@ -168,7 +168,7 @@ func _process(delta):
 			label_wave.text = str(wave + 1)
 			get_node("AnimationPlayer").play("next_wave")
 			
-#			time_bonus_factor += 1
+			time_bonus_factor += .15
 			load_level_data()
 		else:
 			label_wave.text = "EXTRA"
@@ -190,7 +190,7 @@ func _draw():
 	draw_circle(Vector2(width / 2, height / 2), playarea_radius, Color("252525"))
 
 var level_data = [
-	# 1. Gen
+	# Gen
 	{
 		"min_radius": 250,
 		"rocket_rate": 1,
@@ -212,92 +212,180 @@ var level_data = [
 		"rocket_speed": 30,
 		"rocket_radius": 16
 	},
-	# 2. Gen
+	# Gen
 	{
 		"min_radius": 250,
 		"rocket_rate": 1,
 		"rocket_count": 4,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 24
 	},
 	{
 		"min_radius": 200,
 		"rocket_rate": 1,
 		"rocket_count": 5,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 24
 	},
 	{
 		"min_radius": 150,
 		"rocket_rate": 1,
 		"rocket_count": 5,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 24
 	},
-	# 3. Gen
+	# Gen
 	{
 		"min_radius": 250,
 		"rocket_rate": 1,
 		"rocket_count": 5,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 24
 	},
 	{
 		"min_radius": 200,
-		"rocket_rate": 6,
-		"rocket_count": 5,
+		"rocket_rate": 1,
+		"rocket_count": 6,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 24
 	},
 	{
 		"min_radius": 150,
-		"rocket_rate": 6,
-		"rocket_count": 5,
+		"rocket_rate": 1,
+		"rocket_count": 6,
 		"rocket_speed": 30,
-		"rocket_radius": 32
+		"rocket_radius": 24
 	},
-	# 4. Gen
+	# Gen
 	{
 		"min_radius": 250,
 		"rocket_rate": 1,
 		"rocket_count": 6,
-		"rocket_speed": 45,
-		"rocket_radius": 48
+		"rocket_speed": 30,
+		"rocket_radius": 32
 	},
 	{
 		"min_radius": 200,
-		"rocket_rate": 6,
-		"rocket_count": 5,
-		"rocket_speed": 45,
-		"rocket_radius": 48
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 30,
+		"rocket_radius": 32
 	},
 	{
 		"min_radius": 150,
-		"rocket_rate": 6,
-		"rocket_count": 5,
-		"rocket_speed": 45,
-		"rocket_radius": 48
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 30,
+		"rocket_radius": 32
 	},
-	# 5. Gen
+	# Gen
 	{
 		"min_radius": 250,
 		"rocket_rate": 1,
 		"rocket_count": 6,
-		"rocket_speed": 45,
-		"rocket_radius": 64
+		"rocket_speed": 30,
+		"rocket_radius": 48
 	},
 	{
 		"min_radius": 200,
-		"rocket_rate": 6,
-		"rocket_count": 5,
-		"rocket_speed": 45,
-		"rocket_radius": 64
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 30,
+		"rocket_radius": 48
 	},
 	{
 		"min_radius": 150,
-		"rocket_rate": 6,
-		"rocket_count": 5,
-		"rocket_speed": 45,
-		"rocket_radius": 64
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 30,
+		"rocket_radius": 48
+	},
+	# Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 35,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 35,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 35,
+		"rocket_radius": 48
+	},
+	# Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 1,
+		"rocket_count": 6,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	# Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 7,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 1,
+		"rocket_count": 7,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 1,
+		"rocket_count": 7,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	# Gen
+	{
+		"min_radius": 250,
+		"rocket_rate": 1,
+		"rocket_count": 8,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 200,
+		"rocket_rate": 1,
+		"rocket_count": 8,
+		"rocket_speed": 40,
+		"rocket_radius": 48
+	},
+	{
+		"min_radius": 150,
+		"rocket_rate": 1,
+		"rocket_count": 8,
+		"rocket_speed": 40,
+		"rocket_radius": 48
 	}
 ]
