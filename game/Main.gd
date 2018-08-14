@@ -17,7 +17,7 @@ extends Node2D
 
 # 6. Szenen, Nodes etc. so früh wie möglich / an einer Stelle laden
 
-# 7. Wie kann ich von externen Abhängigkeiten abstrahieren
+# 7. Wie kann ich von externen Abhängigkeiten abstrahieren, vor allem auch "Main" Szene
 
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
 
