@@ -19,6 +19,20 @@ extends Node2D
 # Damit werden auch Fehler durch falsche Pfade möglicherweise sichtbar
 
 # 7. Wie kann ich von externen Abhängigkeiten abstrahieren, vor allem auch "Main" Szene
+# Und direkte Abhängigkeiten vom Aufbau der Szene?!
+
+# 8. Hinzufügen und entfernen von Kindern immer mit deferred
+
+# 9. Löschen von Elementen über SceneTree
+
+# 10. Ändern von Szenen über SceneTree
+
+# 11. Externe Szenen über export Variable, hält Refactoring stand
+# Evtl auch Nodes über NodePath exportieren und vorhandensein checken!
+
+# 12. Shortcuts nutzen!
+
+# 13. Tools für verwaiste Dateien und Referenzen nutzen
 
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
 
