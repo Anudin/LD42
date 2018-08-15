@@ -1,5 +1,8 @@
 extends Node2D
 
+signal score_changed
+signal wave_changed
+
 # 1. Timer auf dem  SceneTree sind extrem gefährlich. Nur überlegt nutzen.
 # One line timer sind trotzdem nützlich, allerdings mit connect
 
@@ -44,11 +47,10 @@ var width = ProjectSettings.get_setting("display/window/size/width")
 var height = ProjectSettings.get_setting("display/window/size/height")
 var center = Vector2(width / 2, height / 2)
 
+onready var animator_canvas_modulate = get_node("CanvasModulate/AnimationPlayer")
+
 onready var camera = get_node("Camera")
 onready var player = get_node("Player")
-onready var label_score = get_node("HUD/Score")
-onready var animator_score = get_node("HUD/Score/AnimationPlayer")
-onready var label_wave = get_node("HUD/Wave")
 
 export var shrinking_rate = 10
 export var rocket_rate = .25
@@ -97,7 +99,7 @@ func load_level_data():
 
 func _on_rocket_killed():
 	score += (SCORE_BONUS_KILL / 2)
-	animator_score.play("bonus")
+	emit_signal("score_changed", score)
 	
 	shaking = true
 	
@@ -120,7 +122,8 @@ func _on_rocket_killed():
 	shaking = false
 
 func _ready():
-	randomize()	
+	randomize()
+	
 	player.connect("player_died", get_node("HUD/ScoreLogic"), "_on_player_died")
 	player.position = Vector2(width / 2, height / 2)
 	playarea_radius = height / 2
@@ -158,20 +161,20 @@ func timeout_timer_rocket_spawn():
 
 func _process(delta):
 	score += delta * time_bonus_factor
-	label_score.text = str(int(score))
+	emit_signal("score_changed", score)
 	
 	if not expanding and playarea_radius < playarea_min_radius:
 		expanding = true
 		
 		if wave < level_data.size() - 1:
 			wave += 1
-			label_wave.text = str(wave + 1)
-			get_node("AnimationPlayer").play("next_wave")
+			animator_canvas_modulate.play("next_wave")
+			emit_signal("wave_changed", wave)
 			
 			time_bonus_factor += .15
 			load_level_data()
 		else:
-			label_wave.text = "EXTRA"
+			emit_signal("wave_changed", -1)
 		
 		tween_expand.remove_all()
 		tween_expand.interpolate_property(self,
