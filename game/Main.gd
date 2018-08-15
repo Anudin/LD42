@@ -30,6 +30,7 @@ extends Node2D
 
 # 11. Externe Szenen über export Variable, hält Refactoring stand
 # Interne Nodes über get_path, externe über export(NodePath)
+# Keine export variablen für in code instanzierte Elemente!
 
 # 12. Shortcuts nutzen!
 
