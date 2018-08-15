@@ -101,7 +101,7 @@ func load_level_data():
 
 func _on_rocket_killed():
 	score += (SCORE_BONUS_KILL / 2)
-	emit_signal("score_changed", score)
+	emit_signal("score_changed", score, true)
 	
 	shaking = true
 	
