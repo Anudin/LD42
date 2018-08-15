@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://Player/player.png" type="Texture" id=2]
-[ext_resource path="res://sound/shoot.wav" type="AudioStream" id=3]
+[ext_resource path="res://Player/Counter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/player.png" type="Texture" id=3]
+[ext_resource path="res://sound/shoot.wav" type="AudioStream" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 16.1476
 
-[node name="Player" type="Area2D" index="0" groups=[
+[node name="Player" type="Area2D" groups=[
 "player",
 ]]
 
@@ -21,9 +22,10 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
+tscn_counter = ExtResource( 2 )
 target_mode_length = 3
-target_timescale = 0.1
-target_cone_angle = 45
+target_timescale = 0.05
+target_cone_angle = 90
 boost_length_sec = 1
 boost_acceleration = 480
 boost_speed = 720
@@ -31,7 +33,7 @@ boost_speed = 720
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 modulate = Color( 0.529412, 0, 1, 1 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
@@ -40,7 +42,7 @@ shape = SubResource( 1 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="2"]
 
-stream = ExtResource( 3 )
+stream = ExtResource( 4 )
 volume_db = -9.0
 pitch_scale = 1.0
 autoplay = false

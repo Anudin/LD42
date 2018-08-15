@@ -212,7 +212,7 @@ use_filter = false
 font_data = ExtResource( 5 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 shrinking_rate = 10
@@ -221,6 +221,7 @@ explosion_radius = 32
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." index="0"]
 
+editor/display_folded = true
 color = Color( 1, 1, 1, 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasModulate" index="0"]
@@ -245,6 +246,7 @@ bus = "Master"
 [node name="HUD" type="CanvasLayer" parent="." index="2"]
 
 pause_mode = 2
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -531,10 +533,6 @@ position = Vector2( 290, 0 )
 position = Vector2( 0, 170 )
 
 [node name="Player" parent="." index="4" instance=ExtResource( 9 )]
-
-_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
-target_timescale = 0.05
-target_cone_angle = 90
 
 [node name="Camera" type="Camera2D" parent="." index="5"]
 

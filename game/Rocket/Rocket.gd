@@ -11,6 +11,7 @@ onready var animation_player = get_node("AnimationPlayer")
 
 var explosion_radius = 16
 var initial_velocity = 30
+var time_before_explosion = 1.5
 
 var velocity
 var acceleration = 1
@@ -18,8 +19,6 @@ var tween_initial_acceleration
 
 var pushed = false
 var spin = 0
-
-var dead_timer
 
 onready var audio_startup = get_node("AudioStartup")
 onready var audio_explode = get_node("AudioExplode")
@@ -46,11 +45,6 @@ func _ready():
 		Tween.EASE_IN,
 		0)
 	tween_initial_acceleration.start()
-	
-	dead_timer = Timer.new()
-	add_child(dead_timer)
-	dead_timer.wait_time = 1.5
-	dead_timer.connect("timeout", self, "explode")
 
 func set_velocity(value):
 	velocity = value
@@ -81,19 +75,16 @@ func draw_flight_prediction():
 
 func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):
-		# TODO Add rotation depending on velocity (strength + direction)
 		var original_velocity = velocity
 		velocity = (position - area.position).normalized() * velocity.length()
 		
 		spin = original_velocity.angle_to(velocity)
-		spin /= abs(spin)
+		spin /= abs(spin) # Normalize
 		spin *= 2 * PI * (clamp(velocity.length() / 600, 0.1, 1) * 2)
 		
 		pushed = true
-		area.shape_owner_set_disabled(area.shape_owner, true)
-		get_tree().queue_delete(area)
 		
-		dead_timer.start()
+		get_tree().create_timer(time_before_explosion, false).connect("timeout", self, "explode")
 	elif area.is_in_group("rockets") and (pushed or area.pushed):
 		emit_signal("rocket_killed")
 		explode(true)
@@ -103,6 +94,7 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		player.hit_by_rocket()
 
 func _on_VisibilityNotifier2D_screen_exited():
+	collision_shape.disabled = true
 	get_tree().queue_delete(self)
 
 var dead = false

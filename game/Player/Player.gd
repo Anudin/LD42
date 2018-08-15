@@ -2,7 +2,8 @@ extends Area2D
 
 signal player_died
 
-var tscn_counter = preload("res://Player/Counter.tscn")
+export(PackedScene) var tscn_counter
+var gd_counter = preload("res://Player/Counter.gd")
 
 onready var counter_timer = get_node("/root/Main/HUD/CounterTimer")
 
@@ -17,8 +18,6 @@ export var boost_acceleration = 480
 export var boost_speed = 720
 
 const TARGET_ACTIVATION_RADIUS = 200
-# TODO Rename TARGET_EXPLOSION_RADIUS, or even better move to Counter
-const TARGET_VISIBLE_RADIUS = 60
 
 var timer_doubleclick
 var last_event
@@ -42,7 +41,7 @@ var tween_target_timescale
 
 onready var audio = get_node("AudioStreamPlayer2D")
 
-func _ready():
+func _ready():	
 	target_cone_angle = deg2rad(target_cone_angle)
 	
 	timer_doubleclick = Timer.new()
@@ -210,16 +209,23 @@ func target():
 		target = closest_rocket
 		target_offset = get_global_mouse_position() - closest_rocket.position
 		
-		draw_circle(to_local(target.position + target_offset), TARGET_VISIBLE_RADIUS, Color("11FFFF00"))
+		draw_circle(
+			to_local(target.position + target_offset), 
+			gd_counter.explosion_radius, 
+			Color("11FFFF00")
+		)
 		
-		draw_rect(Rect2(
-			to_local(target.position + target_offset) - Vector2(4,4), 
-			Vector2(8,8)
-		), Color(1, 0, 0))
+		draw_rect(
+			Rect2(
+				to_local(target.position + target_offset) - Vector2(4, 4), 
+				Vector2(8, 8)
+			), 
+			Color(1, 0, 0)
+		)
 	else:
 		target = null
 
 func counter():
 	var counter = tscn_counter.instance()
-	counter.init(position, weakref(target), target_offset, TARGET_VISIBLE_RADIUS)
+	counter.init(position, weakref(target), target_offset)
 	get_node("/root/Main").add_child(counter)

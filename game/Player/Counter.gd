@@ -1,27 +1,20 @@
 extends Area2D
 
-# TODO Remove out of screen
-
 export var speed = 1500.0
-var explosion_radius
-
-var ref_target
-var target_offset
-
-var velocity
+const explosion_radius = 60
 
 var shape_owner
 
-func init(position, ref_target, target_offset, explosion_radius):
-	self.ref_target = ref_target
-	self.target_offset = target_offset
-	self.position = position
-	self.explosion_radius = explosion_radius
-	
+var velocity = null
+
+func _ready():
 	var collider = CircleShape2D.new()
 	collider.radius = explosion_radius
 	shape_owner = create_shape_owner(self)
 	shape_owner_add_shape(get_shape_owners()[0], collider)
+
+func init(position, ref_target, target_offset):
+	self.position = position
 	
 	var target = ref_target.get_ref()
 	velocity = ((target.position + target_offset) - position).normalized() * speed
@@ -31,3 +24,14 @@ func _process(delta):
 
 func _draw():
 	draw_circle(Vector2(0,0), explosion_radius, Color("11FFFF00"))
+
+func disable_collider_and_queue_delete():
+	shape_owner_set_disabled(shape_owner, true)
+	get_tree().queue_delete(self)
+
+func _on_Counter_area_shape_entered(area_id, area, area_shape, self_shape):
+	if area.is_in_group("rockets"):
+		disable_collider_and_queue_delete()
+
+func _on_VisibilityNotifier2D_screen_exited():
+	disable_collider_and_queue_delete()
