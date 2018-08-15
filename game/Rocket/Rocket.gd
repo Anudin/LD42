@@ -3,8 +3,8 @@ extends Area2D
 signal rocket_exploded
 signal rocket_killed
 
-onready var player = get_node("/root/Main/Player")
-onready var target_position = player.position
+onready var player
+onready var target_position
 
 onready var collision_shape = get_node("CollisionShape2D")
 onready var animation_player = get_node("AnimationPlayer")
@@ -25,6 +25,9 @@ onready var audio_startup = get_node("AudioStartup")
 onready var audio_explode = get_node("AudioExplode")
 
 func _ready():
+	player = get_tree().get_nodes_in_group("player")[0]
+	target_position = player.position
+	
 	audio_startup.play()
 	connect("rocket_killed", get_node("/root/Main"), "_on_rocket_killed")
 	connect("rocket_exploded", get_node("/root/Main"), "_on_rocket_exploded", [weakref(self)])

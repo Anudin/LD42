@@ -32,7 +32,7 @@ signal wave_changed
 # 10. Ändern von Szenen über SceneTree
 
 # 11. Externe Szenen über export Variable, hält Refactoring stand
-# Interne Nodes über get_path, externe über export(NodePath)
+# Nodes immer be Instanzierung laden, damit Fehler früh auffallen
 # Keine export variablen für in code instanzierte Elemente!
 
 # 12. Shortcuts nutzen!
@@ -40,6 +40,8 @@ signal wave_changed
 # 13. Tools für verwaiste Dateien und Referenzen nutzen
 
 # 14. get_node can be replaced with $ ...
+
+# Signale über zentrales Node?! Autoload?!
 
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
 
