@@ -1,6 +1,7 @@
 extends Node2D
 
 # 1. Timer auf dem  SceneTree sind extrem gefährlich. Nur überlegt nutzen.
+# One line timer sind trotzdem nützlich, allerdings mit connect
 
 # 2. Niemals die Auflösung einer Kollision für eine andere Komponente übernehmen.
 
