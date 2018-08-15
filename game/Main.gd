@@ -120,9 +120,7 @@ func _on_rocket_killed():
 	shaking = false
 
 func _ready():
-	randomize()
-	DebugInfo.visible = true
-	
+	randomize()	
 	player.connect("player_died", get_node("HUD/ScoreLogic"), "_on_player_died")
 	player.position = Vector2(width / 2, height / 2)
 	playarea_radius = height / 2

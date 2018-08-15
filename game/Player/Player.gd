@@ -46,7 +46,7 @@ func _ready():
 	target_cone_angle = deg2rad(target_cone_angle)
 	
 	timer_doubleclick = Timer.new()
-	timer_doubleclick.wait_time = TimingConstants.TRESHOLD_DOUBLECLICK
+	timer_doubleclick.wait_time = GlobalConstants.TIME_DOUBLECLICK_TRESHOLD
 	timer_doubleclick.one_shot = true
 	add_child(timer_doubleclick)
 	
@@ -197,10 +197,7 @@ func target():
 	
 	# Find closest targetable rocket
 	# DEBUG: Draw activation radius, line to player
-	for rocket in rockets:
-		if DebugInfo.visible:
-			draw_circle(to_local(rocket.position), TARGET_ACTIVATION_RADIUS, Color("11FFFF00"))
-		
+	for rocket in rockets:		
 		var distance_to_mouse = get_global_mouse_position().distance_to(rocket.position)
 		
 		if distance_to_mouse <= TARGET_ACTIVATION_RADIUS and \

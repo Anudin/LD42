@@ -16,9 +16,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-DebugInfo="*res://DebugInfo.gd"
-FloatComparison="*res://FloatComparison.gd"
-TimingConstants="*res://TimingConstants.gd"
+GlobalInit="*res://autoload/GlobalInit.gd"
+GlobalConstants="*res://autoload/GlobalConstants.gd"
+Debug="*res://autoload/Debug.gd"
+GlobalInput="*res://autoload/GlobalInput.gd"
 
 [debug]
 
@@ -52,7 +53,6 @@ player_target=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_n
  ]
 player_counter=[ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
-debug_timescale=[  ]
 restart=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
