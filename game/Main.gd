@@ -28,7 +28,7 @@ extends Node2D
 # 10. Ändern von Szenen über SceneTree
 
 # 11. Externe Szenen über export Variable, hält Refactoring stand
-# Evtl auch Nodes über NodePath exportieren und vorhandensein checken!
+# Interne Nodes über get_path, externe über export(NodePath)
 
 # 12. Shortcuts nutzen!
 
