@@ -41,6 +41,8 @@ signal wave_changed
 
 # 14. get_node can be replaced with $ ...
 
+# 15. weakref für externe abhängigkeiten? 
+
 # Signale über zentrales Node?! Autoload?!
 
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
