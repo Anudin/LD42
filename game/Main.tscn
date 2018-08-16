@@ -255,7 +255,6 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="PauseLogic" type="Node2D" parent="HUD" index="0"]
 
-editor/display_folded = true
 visible = false
 script = ExtResource( 4 )
 canvas_modulate = NodePath("../../CanvasModulate")
@@ -310,7 +309,6 @@ _sections_unfolded = [ "Rect", "custom_fonts" ]
 
 visible = false
 script = ExtResource( 6 )
-canvas_modulate = NodePath("../../CanvasModulate")
 
 [node name="Label" type="Label" parent="HUD/DeathScreenLogic" index="0"]
 

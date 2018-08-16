@@ -1,13 +1,20 @@
 extends CanvasLayer
 
-onready var main = get_node("/root/Main")
+onready var pause_logic = $PauseLogic
+var pause_logic_deactivated = false
+onready var death_screen_logic = $DeathScreenLogic
 onready var label_score = $LabelScore
 onready var animator_score = $LabelScore/AnimationPlayer
 onready var label_wave = $LabelWave
 
-func _ready():
-	main.connect("score_changed", self, "_on_score_changed")
-	main.connect("wave_changed", self, "_on_wave_changed")
+func _process(delta):
+	if pause_logic_deactivated and not death_screen_logic.visible:
+		pause_logic.set_process_input(true)
+		pause_logic_deactivated = false
+
+func _on_player_died():
+	pause_logic.set_process_input(false)
+	pause_logic_deactivated = true
 
 func _on_score_changed(score, bonus=false):
 	label_score.text = str(int(score))
