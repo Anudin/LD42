@@ -3,48 +3,6 @@ extends Node2D
 signal score_changed
 signal wave_changed
 
-# 1. Timer auf dem  SceneTree sind extrem gefährlich. Nur überlegt nutzen.
-# One line timer sind trotzdem nützlich, allerdings mit connect
-
-# 2. Niemals die Auflösung einer Kollision für eine andere Komponente übernehmen.
-
-# 3. Engine.time_scale lieber multiplizieren statt absolut zu setzen, so kann an 
-# mehreren Stellen manipuliert werden.
-
-# 4. Gameplay code sollte IDR auf unhandled_input reagieren
-
-# 5. Die meisten Komponenten benötigen eine State Machine. Im Todesfall bietet sich an:
-# - CollisionShape deaktivieren
-# - Status Flag setzen
-#	- Alle Methoden sollten auf Status Flag reagieren
-# - Nicht einfach Verhalten vorraus setzen, entsprechende Methoden / Signale aufrufen
-
-# 6. Szenen, Nodes etc. so früh wie möglich / an einer Stelle laden
-# Damit werden auch Fehler durch falsche Pfade möglicherweise sichtbar
-
-# 7. Wie kann ich von externen Abhängigkeiten abstrahieren, vor allem auch "Main" Szene
-# Und direkte Abhängigkeiten vom Aufbau der Szene?!
-
-# 8. Hinzufügen und entfernen von Kindern immer mit deferred
-
-# 9. Löschen von Elementen über SceneTree
-
-# 10. Ändern von Szenen über SceneTree
-
-# 11. Externe Szenen über export Variable, hält Refactoring stand
-# Nodes immer be Instanzierung laden, damit Fehler früh auffallen
-# Keine export variablen für in code instanzierte Elemente!
-
-# 12. Shortcuts nutzen!
-
-# 13. Tools für verwaiste Dateien und Referenzen nutzen
-
-# 14. get_node can be replaced with $ ...
-
-# 15. weakref für externe abhängigkeiten? 
-
-# Signale über zentrales Node?! Autoload?!
-
 # TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
 
 var width = ProjectSettings.get_setting("display/window/size/width")
@@ -396,3 +354,45 @@ var level_data = [
 		"rocket_radius": 48
 	}
 ]
+
+# 1. Timer auf dem  SceneTree sind extrem gefährlich. Nur überlegt nutzen.
+# One line timer sind trotzdem nützlich, allerdings mit connect
+
+# 2. Niemals die Auflösung einer Kollision für eine andere Komponente übernehmen.
+
+# 3. Engine.time_scale lieber multiplizieren statt absolut zu setzen, so kann an 
+# mehreren Stellen manipuliert werden.
+
+# 4. Gameplay code sollte IDR auf unhandled_input reagieren
+
+# 5. Die meisten Komponenten benötigen eine State Machine. Im Todesfall bietet sich an:
+# - CollisionShape deaktivieren
+# - Status Flag setzen
+#	- Alle Methoden sollten auf Status Flag reagieren
+# - Nicht einfach Verhalten vorraus setzen, entsprechende Methoden / Signale aufrufen
+
+# 6. Szenen, Nodes etc. so früh wie möglich / an einer Stelle laden
+# Damit werden auch Fehler durch falsche Pfade möglicherweise sichtbar
+
+# 7. Wie kann ich von externen Abhängigkeiten abstrahieren, vor allem auch "Main" Szene
+# Und direkte Abhängigkeiten vom Aufbau der Szene?!
+
+# 8. Hinzufügen und entfernen von Kindern immer mit deferred
+
+# 9. Löschen von Elementen über SceneTree
+
+# 10. Ändern von Szenen über SceneTree
+
+# 11. Externe Szenen über export Variable, hält Refactoring stand
+# Nodes immer be Instanzierung laden, damit Fehler früh auffallen
+# Keine export variablen für in code instanzierte Elemente!
+
+# 12. Shortcuts nutzen!
+
+# 13. Tools für verwaiste Dateien und Referenzen nutzen
+
+# 14. get_node can be replaced with $ ...
+
+# 15. weakref für externe abhängigkeiten? 
+
+# Signale über zentrales Node?! Autoload?!
