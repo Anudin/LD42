@@ -245,7 +245,6 @@ bus = "Master"
 [node name="HUD" type="CanvasLayer" parent="." index="2"]
 
 pause_mode = 2
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -307,13 +306,13 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="ScoreLogic" type="Node2D" parent="HUD" index="1"]
+[node name="DeathScreenLogic" type="Node2D" parent="HUD" index="1"]
 
-editor/display_folded = true
 visible = false
 script = ExtResource( 6 )
+canvas_modulate = NodePath("../../CanvasModulate")
 
-[node name="Label" type="Label" parent="HUD/ScoreLogic" index="0"]
+[node name="Label" type="Label" parent="HUD/DeathScreenLogic" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -336,7 +335,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="Label2" type="Label" parent="HUD/ScoreLogic" index="1"]
+[node name="Label2" type="Label" parent="HUD/DeathScreenLogic" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0

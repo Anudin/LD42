@@ -86,7 +86,7 @@ func _on_rocket_killed():
 func _ready():
 	randomize()
 	
-	player.connect("player_died", get_node("HUD/ScoreLogic"), "_on_player_died")
+	player.connect("player_died", get_node("HUD/DeathScreenLogic"), "_on_player_died")
 	player.position = Vector2(width / 2, height / 2)
 	playarea_radius = height / 2
 	playarea_initial_radius = playarea_radius

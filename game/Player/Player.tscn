@@ -14,6 +14,7 @@ radius = 16.1476
 "player",
 ]]
 
+z_index = 1
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -22,6 +23,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
+_sections_unfolded = [ "Z Index" ]
 tscn_counter = ExtResource( 2 )
 target_mode_length = 3
 target_timescale = 0.05
