@@ -15,4 +15,5 @@ func _input(event):
 		else:
 			canvas_modulate.color = Color(1, 1, 1)
 	elif visible and event.is_action_pressed("exit"):
-		get_tree().quit()
+		if OS.get_name() != "HTML5":
+			get_tree().quit()

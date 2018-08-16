@@ -7,6 +7,10 @@ onready var label_score = $LabelScore
 onready var animator_score = $LabelScore/AnimationPlayer
 onready var label_wave = $LabelWave
 
+func _ready():
+	if OS.get_name() == "HTML5":
+		$PauseLogic/ExitHint.visible = false
+
 func _process(delta):
 	if pause_logic_deactivated and not death_screen_logic.visible:
 		pause_logic.set_process_input(true)
