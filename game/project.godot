@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="Battle Billiard Galactic Edition"
-run/main_scene="res://ui/Tutorial.tscn"
+run/main_scene="res://Tutorial.tscn"
 config/icon="res://icon.png"
 
 [autoload]

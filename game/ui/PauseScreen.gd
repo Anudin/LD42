@@ -1,9 +1,12 @@
 extends Node2D
 
-export(NodePath) var canvas_modulate
+signal change_visibility
+
+onready var canvas_modulate = owner.get_node("CanvasModulate")
 
 func _ready():
-	canvas_modulate = get_node(canvas_modulate)
+	if OS.get_name() == "HTML5":
+		$ExitHint.visible = false
 
 func _input(event):
 	if event.is_action_pressed("toggle_pause"):
@@ -14,6 +17,6 @@ func _input(event):
 			canvas_modulate.color = Color(0.35, 0.35, 0.35)
 		else:
 			canvas_modulate.color = Color(1, 1, 1)
-	elif visible and event.is_action_pressed("exit"):
-		if OS.get_name() != "HTML5":
-			get_tree().quit()
+	elif visible and event.is_action_pressed("exit") and \
+	OS.get_name() != "HTML5":
+		get_tree().quit()
