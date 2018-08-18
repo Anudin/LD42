@@ -128,7 +128,7 @@ func _unhandled_input(event):
 		last_event = event
 		timer_doubleclick.start()
 
-func _on_rocket_killed():
+func _on_Rocket_killed():
 	counter_timer.value = 100
 	get_node("/root/Main/HUD/CounterTimer/AnimationPlayer").play("flash")
 

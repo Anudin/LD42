@@ -1,59 +1,61 @@
 extends Area2D
 
-signal rocket_exploded
-signal rocket_killed
-
-onready var player
-onready var target_position
+signal exploded
+signal killed
 
 onready var collision_shape = get_node("CollisionShape2D")
-onready var animation_player = get_node("AnimationPlayer")
+onready var animator = get_node("AnimationPlayer")
+onready var audio_startup = get_node("AudioStartup")
+onready var audio_explode = get_node("AudioExplode")
 
 var explosion_radius = 16
 var initial_velocity = 30
 var time_before_explosion = 1.5
 
 var velocity
-var acceleration = 1
-var tween_initial_acceleration
+var hit = false
+var rotate_velocity = 0
 
-var pushed = false
-var spin = 0
-
-onready var audio_startup = get_node("AudioStartup")
-onready var audio_explode = get_node("AudioExplode")
+var player = null
+var target_position = null
 
 func _ready():
-	player = get_tree().get_nodes_in_group("player")[0]
-	target_position = player.position
+	player = get_tree().current_scene.find_node("Player")
+	
+	connect("exploded", get_tree().current_scene, "_on_Rocket_exploded", [weakref(self)])
+	connect("killed", get_tree().current_scene, "_on_Rocket_killed")
+	connect("killed", player, "_on_Rocket_killed")
+	
+	align_towards_target()
+	setup_start_acceleration()
 	
 	audio_startup.play()
-	connect("rocket_killed", get_node("/root/Main"), "_on_rocket_killed")
-	connect("rocket_exploded", get_node("/root/Main"), "_on_rocket_exploded", [weakref(self)])
-	connect("rocket_killed", player, "_on_rocket_killed")
+
+func setup_start_acceleration():
+	var tween_startup_velocity = Tween.new()
+	add_child(tween_startup_velocity)
 	
+	tween_startup_velocity.interpolate_property(
+		self,
+		"velocity", velocity, velocity * 10, 1,
+		Tween.TRANS_EXPO, Tween.EASE_IN, 0)
+		
+	tween_startup_velocity.start()
+
+func align_towards_target():
+	target_position = player.position
 	var target_angle = get_angle_to(target_position)
 	rotation = target_angle
 	velocity = Vector2(cos(target_angle), sin(target_angle)) * initial_velocity
-	
-	# Accelerate on startup
-	tween_initial_acceleration = Tween.new()
-	add_child(tween_initial_acceleration)
-	
-	tween_initial_acceleration.interpolate_method(self, "set_velocity", velocity, velocity * 10, 1,
-		Tween.TRANS_EXPO,
-		Tween.EASE_IN,
-		0)
-	tween_initial_acceleration.start()
-
-func set_velocity(value):
-	velocity = value
 
 func _physics_process(delta):
 	position += velocity * delta
-	rotate(spin * delta)
+	rotate(rotate_velocity * delta)
 	
-	if not animation_player.is_playing() and not pushed:
+	# TODO Propper state management?
+	var exploding = animator.is_playing()
+	
+	if not exploding and not hit:
 		# TODO Fix this ugly hack, maybe project on a normal
 		if position.distance_to(target_position) < 10:
 			if position.distance_to(player.position) < explosion_radius:
@@ -64,64 +66,50 @@ func _physics_process(delta):
 	update()
 
 func _draw():
-	if not animation_player.is_playing() and not pushed:
-		# Preview explosion radius
+	var exploding = animator.is_playing()
+	
+	if not exploding and not hit:
 		draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.1))
 		draw_circle(to_local(target_position), 4, Color(1, 0, 0, 0.8))
-		draw_flight_prediction()
+		draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("33FFFF00"), 2, false)
 
-func draw_flight_prediction():
-	draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("33FFFF00"), 2, false)
+func explode(kill = false):
+	velocity *= .15
+	collision_shape.disabled = true
+	audio_explode.play()
+	
+	if not kill:
+		animator.play("explode")
+	else:
+		animator.play("explode_kill")
+		get_node("Particles2D").emitting = true
+	
+	emit_signal("exploded")
 
 func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("counters"):
-		var original_velocity = velocity
+		hit = true
+		
+		var prev_velocity = velocity
+		
 		velocity = (position - area.position).normalized() * velocity.length()
-		
-		spin = original_velocity.angle_to(velocity)
-		spin /= abs(spin) # Normalize
-		spin *= 2 * PI * (clamp(velocity.length() / 600, 0.1, 1) * 2)
-		
-		pushed = true
+		rotate_velocity = prev_velocity.angle_to(velocity)
+		rotate_velocity /= abs(rotate_velocity) # Normalize
+		rotate_velocity *= 2 * PI * (clamp(velocity.length() / 600, 0.1, 1) * 2)
 		
 		get_tree().create_timer(time_before_explosion, false).connect("timeout", self, "explode")
-	elif area.is_in_group("rockets") and (pushed or area.pushed):
-		emit_signal("rocket_killed")
+	elif area.is_in_group("rockets") and (hit or area.hit):
 		explode(true)
+		emit_signal("killed")
 	elif area == player:
 		explode()
-		yield(get_tree().create_timer(.25, false), "timeout")
-		player.hit_by_rocket()
-
-func _on_VisibilityNotifier2D_screen_exited():
-	collision_shape.disabled = true
-	get_tree().queue_delete(self)
-
-var dead = false
-
-func explode(kill = false):
-	if dead:
-		return
-	
-	emit_signal("rocket_exploded")
-	
-	audio_explode.play()
-	collision_shape.disabled = true
-	velocity *= .15
-	
-	if not kill:
-		animation_player.play("explode")
-	else:
-		get_node("Particles2D").emitting = true
-		animation_player.play("explode_kill")
+		get_tree().create_timer(.25, false).connect("timeout", player, "hit_by_rocket")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	set_process(false)
 	set_physics_process(false)
-	dead = true
-	
-	var timer = Timer.new()
-	add_child(timer)
-	timer.wait_time = .3
-	timer.start()
-	timer.connect("timeout", get_tree(), "queue_delete", [self])
+	get_tree().queue_delete(self)
+
+func _on_VisibilityNotifier2D_screen_exited():
+	collision_shape.disabled = true
+	get_tree().queue_delete(self)

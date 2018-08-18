@@ -37,7 +37,7 @@ var time_bonus_factor = 1
 var tween_shake
 var shaking = false
 
-func _on_rocket_exploded(rocket):
+func _on_Rocket_exploded(rocket):
 	if rocket.get_ref() and not shaking:
 		var goal = -(center - rocket.get_ref().position).normalized() * 10
 		
@@ -59,7 +59,7 @@ func load_level_data():
 	rocket_count = level_data[wave]["rocket_count"]
 	explosion_radius = level_data[wave]["rocket_radius"]
 
-func _on_rocket_killed():
+func _on_Rocket_killed():
 	score += (SCORE_BONUS_KILL / 2)
 	emit_signal("score_changed", score, true)
 	
