@@ -103,7 +103,6 @@ func _on_Rocket_area_shape_entered(area_id, area, area_shape, self_shape):
 		emit_signal("killed")
 	elif area == player:
 		explode()
-		get_tree().create_timer(.25, false).connect("timeout", player, "hit_by_rocket")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	set_process(false)

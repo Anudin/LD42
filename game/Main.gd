@@ -3,8 +3,6 @@ extends Node2D
 signal score_changed
 signal wave_changed
 
-# TODO FIX MULTIPLE ROCKETS SPAWNING ON SAME SPAWN
-
 var width = ProjectSettings.get_setting("display/window/size/width")
 var height = ProjectSettings.get_setting("display/window/size/height")
 var center = Vector2(width / 2, height / 2)

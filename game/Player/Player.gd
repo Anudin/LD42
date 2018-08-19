@@ -5,6 +5,7 @@ signal player_died
 export(PackedScene) var tscn_counter
 var gd_counter = preload("res://Player/Counter.gd")
 
+onready var collision_shape = get_node("CollisionShape2D")
 onready var counter_timer = get_node("/root/Main/HUD/CounterTimer")
 
 # TODO Make counters correct fleight paths
@@ -180,9 +181,6 @@ func _physics_process(delta):
 	
 	position += velocity * delta
 
-func hit_by_rocket():
-	emit_signal("player_died")
-
 func _draw():
 	if target_mode:
 		target()
@@ -228,3 +226,10 @@ func counter():
 	var counter = tscn_counter.instance()
 	counter.init(position, weakref(target), target_offset)
 	get_node("/root/Main").add_child(counter)
+
+func _on_Player_area_shape_entered(area_id, area, area_shape, self_shape):
+	if area.is_in_group("rockets"):
+		collision_shape.disabled = true
+
+		# Allow explosion animation to become visible
+		get_tree().create_timer(0.25, false).connect("timeout", self, "emit_signal", ["player_died"])
