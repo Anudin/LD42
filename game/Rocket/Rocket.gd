@@ -52,10 +52,8 @@ func _physics_process(delta):
 	position += velocity * delta
 	rotate(rotate_velocity * delta)
 	
-	# TODO Propper state management?
-	var exploding = animator.is_playing()
-	
-	if not exploding and not hit:
+	if not ["explode", "explode_kill"].has(animator.assigned_animation) \
+		and not hit:
 		# TODO Fix this ugly hack, maybe project on a normal
 		if position.distance_to(target_position) < 10:
 			if position.distance_to(player.position) < explosion_radius:
@@ -65,13 +63,22 @@ func _physics_process(delta):
 	
 	update()
 
+var anim_exhaust_radius = 0
+
 func _draw():
-	var exploding = animator.is_playing()
-	
-	if not exploding and not hit:
-		draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.1))
-		draw_circle(to_local(target_position), 4, Color(1, 0, 0, 0.8))
-		draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("33FFFF00"), 2, false)
+	if not ["explode", "explode_kill"].has(animator.assigned_animation) \
+		and not hit:
+		draw_exhaust()
+		draw_explosion_preview()
+
+func draw_exhaust():
+	draw_circle(Vector2(-18, 0), anim_exhaust_radius, Color("FF0000"))
+	draw_circle(Vector2(-18, 0), anim_exhaust_radius / 2, Color("FFFF00"))
+
+func draw_explosion_preview():
+	draw_circle(to_local(target_position), explosion_radius, Color(1, 0, 0, 0.1))
+	draw_circle(to_local(target_position), 4, Color(1, 0, 0, 0.8))
+	draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("33FFFF00"), 2, false)
 
 func explode(kill = false):
 	velocity *= .15

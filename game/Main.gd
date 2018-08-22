@@ -132,7 +132,7 @@ func _process(delta):
 		if wave < level_data.size() - 1:
 			wave += 1
 			animator_canvas_modulate.play("next_wave")
-			emit_signal("wave_changed", wave)
+			emit_signal("wave_changed", wave + 1)
 			
 			time_bonus_factor += .15
 			load_level_data()
