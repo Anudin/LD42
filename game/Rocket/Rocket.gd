@@ -52,7 +52,7 @@ func _physics_process(delta):
 	position += velocity * delta
 	rotate(rotate_velocity * delta)
 	
-	if not ["explode", "explode_kill"].has(animator.assigned_animation) \
+	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:
 		# TODO Fix this ugly hack, maybe project on a normal
 		if position.distance_to(target_position) < 10:
@@ -66,7 +66,7 @@ func _physics_process(delta):
 var anim_exhaust_radius = 0
 
 func _draw():
-	if not ["explode", "explode_kill"].has(animator.assigned_animation) \
+	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:
 		draw_exhaust()
 		draw_explosion_preview()
