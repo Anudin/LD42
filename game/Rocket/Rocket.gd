@@ -55,6 +55,15 @@ func _physics_process(delta):
 	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:
 		if ((target_position - position) / velocity).x <= 0:
+			var shape = Physics2DServer.circle_shape_create()
+			Physics2DServer.shape_set_data(shape, explosion_radius)
+			
+			var query = Physics2DShapeQueryParameters.new()
+			query.shape_rid = shape
+			query.transform = transform
+			
+			print(get_world_2d().direct_space_state.intersect_shape(query))
+			
 			if position.distance_to(player.position) < explosion_radius:
 				player.hit_by_rocket()
 			
