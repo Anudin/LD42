@@ -65,12 +65,13 @@ func _physics_process(delta):
 
 var anim_exhaust_radius = 0
 
-# TODO Fix overdrawing
 func _draw():
 	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:
 		draw_exhaust()
-		draw_explosion_preview()
+		
+		if position.distance_to(target_position) >= explosion_radius:
+			draw_explosion_preview()
 
 func draw_exhaust():
 	draw_circle(Vector2(-18, 0), anim_exhaust_radius, Color("FF0000"))
