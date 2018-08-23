@@ -51,11 +51,10 @@ func align_towards_target():
 func _physics_process(delta):
 	position += velocity * delta
 	rotate(rotate_velocity * delta)
-	
+
 	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:
-		# TODO Fix this ugly hack, maybe project on a normal
-		if position.distance_to(target_position) < 10:
+		if ((target_position - position) / velocity).x <= 0:
 			if position.distance_to(player.position) < explosion_radius:
 				player.hit_by_rocket()
 			
