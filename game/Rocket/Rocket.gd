@@ -55,16 +55,8 @@ func _physics_process(delta):
 	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:
 		if ((target_position - position) / velocity).x <= 0:
-			var shape = Physics2DServer.circle_shape_create()
-			Physics2DServer.shape_set_data(shape, explosion_radius)
-			
-			var query = Physics2DShapeQueryParameters.new()
-			query.shape_rid = shape
-			query.transform = transform
-			
-			print(get_world_2d().direct_space_state.intersect_shape(query))
-			
-			if position.distance_to(player.position) < explosion_radius:
+			if target_position.distance_to(player.position) < explosion_radius + \
+			player.shape_owner_get_shape(0, 0).radius:
 				player.hit_by_rocket()
 			
 			explode()
@@ -73,6 +65,7 @@ func _physics_process(delta):
 
 var anim_exhaust_radius = 0
 
+# TODO Fix overdrawing
 func _draw():
 	if not animator.assigned_animation.begins_with("explode") \
 		and not hit:

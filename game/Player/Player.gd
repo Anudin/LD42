@@ -229,7 +229,10 @@ func counter():
 
 func _on_Player_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.is_in_group("rockets"):
-		collision_shape.disabled = true
+		hit_by_rocket()
 
-		# Allow explosion animation to become visible
-		get_tree().create_timer(0.25, false).connect("timeout", self, "emit_signal", ["player_died"])
+func hit_by_rocket():
+	collision_shape.disabled = true
+
+	# Allow explosion animation to become visible
+	get_tree().create_timer(0.25, false).connect("timeout", self, "emit_signal", ["player_died"])
