@@ -25,7 +25,7 @@ var last_event
 var timer_boost
 
 var max_speed = 120
-var max_acceleration = 240
+var max_acceleration = 400
 
 var velocity = Vector2(0,0)
 var acceleration = Vector2(0,0)
@@ -172,7 +172,11 @@ func _process(delta):
 	update()
 
 func _physics_process(delta):
-	velocity += acceleration * delta
+	# Does the player accelerate against his current velocity?
+	var turning = velocity * acceleration
+	turning = (turning.x + turning.y) < 0
+	
+	velocity += acceleration * delta * (1 if not turning else 2)
 	
 	if timer_boost.is_stopped():
 		velocity = velocity.clamped(max_speed)
