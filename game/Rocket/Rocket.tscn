@@ -1,11 +1,76 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Rocket/Rocket.gd" type="Script" id=1]
-[ext_resource path="res://Rocket/rocket.png" type="Texture" id=2]
-[ext_resource path="res://Rocket/explosion.png" type="Texture" id=3]
-[ext_resource path="res://Rocket/ExplosionParticles.tres" type="Material" id=4]
-[ext_resource path="res://sound/startup2.wav" type="AudioStream" id=5]
-[ext_resource path="res://sound/explosion.wav" type="AudioStream" id=6]
+[ext_resource path="res://Rocket/trail.png" type="Texture" id=2]
+[ext_resource path="res://Rocket/rocket.png" type="Texture" id=3]
+[ext_resource path="res://Rocket/explosion.png" type="Texture" id=4]
+[ext_resource path="res://Rocket/ExplosionParticles.tres" type="Material" id=5]
+[ext_resource path="res://sound/startup2.wav" type="AudioStream" id=6]
+[ext_resource path="res://sound/explosion.wav" type="AudioStream" id=7]
+
+[sub_resource type="Gradient" id=6]
+
+offsets = PoolRealArray( 0, 1.15808e-008, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.237569, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=7]
+
+flags = 4
+gradient = SubResource( 6 )
+width = 2048
+
+[sub_resource type="Curve" id=8]
+
+min_value = 0.0
+max_value = 2.0
+bake_resolution = 100
+_data = [ Vector2( 0.00561001, 0.504438 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.48077 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+
+flags = 4
+width = 2048
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 0
+flag_align_y = false
+flag_rotate_y = false
+flag_disable_z = true
+spread = 0.0
+flatness = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.0
+initial_velocity_random = 0.0
+angular_velocity = 0.0
+angular_velocity_random = 0.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 0.0
+linear_accel_random = 0.0
+radial_accel = 0.0
+radial_accel_random = 0.0
+tangential_accel = 0.0
+tangential_accel_random = 0.0
+damping = 0.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 1.0
+scale_random = 0.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = false
+_sections_unfolded = [ "Color", "Emission Shape", "Flags", "Gravity", "Initial Velocity", "Linear Accel", "Radial Accel", "Scale", "Spread", "Trail" ]
 
 [sub_resource type="Animation" id=1]
 
@@ -117,7 +182,7 @@ tracks/0/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 21.1087, 13.4595 )
 
-[node name="Rocket" type="Area2D" groups=[
+[node name="Rocket" type="Area2D" index="0" groups=[
 "rockets",
 ]]
 
@@ -131,20 +196,45 @@ audio_bus_name = "Master"
 script = ExtResource( 1 )
 _sections_unfolded = [ "Offset", "Transform" ]
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="ParticlesTrail" type="Particles2D" parent="." index="0"]
+
+position = Vector2( -10, 0 )
+rotation = 3.14014
+scale = Vector2( 1, 1 )
+emitting = true
+amount = 10
+lifetime = 0.5
+one_shot = false
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = false
+draw_order = 0
+process_material = SubResource( 5 )
+texture = ExtResource( 2 )
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time" ]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
 
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Explosion" type="Sprite" parent="." index="1"]
+[node name="Explosion" type="Sprite" parent="." index="2"]
 
 modulate = Color( 1, 1, 1, 0 )
 scale = Vector2( 1e-005, 1e-005 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 
 root_node = NodePath("..")
 autoplay = "startup"
@@ -156,7 +246,7 @@ anims/explode_kill = SubResource( 2 )
 anims/startup = SubResource( 3 )
 blend_times = [  ]
 
-[node name="Particles2D" type="Particles2D" parent="." index="3"]
+[node name="ParticlesExplosion" type="Particles2D" parent="." index="4"]
 
 position = Vector2( -10, 0 )
 emitting = false
@@ -172,25 +262,25 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
 draw_order = 0
-process_material = ExtResource( 4 )
+process_material = ExtResource( 5 )
 texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Process Material", "Time" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
 
 position = Vector2( -0.583969, -7.62939e-006 )
 shape = SubResource( 4 )
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="5"]
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="6"]
 
 rect = Rect2( -10, -10, 20, 20 )
 
-[node name="AudioStartup" type="AudioStreamPlayer2D" parent="." index="6"]
+[node name="AudioStartup" type="AudioStreamPlayer2D" parent="." index="7"]
 
-stream = ExtResource( 5 )
+stream = ExtResource( 6 )
 volume_db = -9.0
 pitch_scale = 1.0
 autoplay = false
@@ -199,9 +289,9 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="AudioExplode" type="AudioStreamPlayer2D" parent="." index="7"]
+[node name="AudioExplode" type="AudioStreamPlayer2D" parent="." index="8"]
 
-stream = ExtResource( 6 )
+stream = ExtResource( 7 )
 volume_db = -9.0
 pitch_scale = 1.0
 autoplay = false

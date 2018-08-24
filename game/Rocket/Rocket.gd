@@ -87,11 +87,13 @@ func explode(kill = false):
 	collision_shape.disabled = true
 	audio_explode.play()
 	
+	$"ParticlesTrail".visible = false
+
 	if not kill:
 		animator.play("explode")
 	else:
 		animator.play("explode_kill")
-		get_node("Particles2D").emitting = true
+		$"ParticlesExplosion".emitting = true
 	
 	emit_signal("exploded")
 
