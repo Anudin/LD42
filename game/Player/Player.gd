@@ -71,10 +71,14 @@ func interpolate_timeframe(timescale):
 func _unhandled_input(event):
 	var movement_event_occured = false
 	
-	if event.action_match(last_event) and event.is_pressed() and not timer_doubleclick.is_stopped():
-		timer_doubleclick.stop()
-		register_doubleclick_input_event(event)
-		return
+	if not event is InputEventJoypadMotion:
+		if event.action_match(last_event) and event.is_pressed() and not timer_doubleclick.is_stopped():
+			timer_doubleclick.stop()
+			register_doubleclick_input_event(event)
+			return
+	elif event.is_action_pressed("player_boost"):
+		acceleration = acceleration.normalized() * boost_acceleration
+		timer_boost.start()
 	
 	if event.is_action("player_up"):
 		if event.is_pressed():
