@@ -10,7 +10,7 @@
 custom_solver_bias = 0.0
 radius = 16.1476
 
-[node name="Player" type="Area2D" index="0"]
+[node name="Player" type="Area2D"]
 
 z_index = 1
 input_pickable = true
@@ -43,7 +43,7 @@ shape = SubResource( 1 )
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="2"]
 
 stream = ExtResource( 4 )
-volume_db = -9.0
+volume_db = -3.0
 pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0

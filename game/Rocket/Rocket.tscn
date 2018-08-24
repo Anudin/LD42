@@ -182,7 +182,7 @@ tracks/0/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 21.1087, 13.4595 )
 
-[node name="Rocket" type="Area2D" index="0" groups=[
+[node name="Rocket" type="Area2D" groups=[
 "rockets",
 ]]
 
@@ -281,7 +281,7 @@ rect = Rect2( -10, -10, 20, 20 )
 [node name="AudioStartup" type="AudioStreamPlayer2D" parent="." index="7"]
 
 stream = ExtResource( 6 )
-volume_db = -9.0
+volume_db = -3.0
 pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
@@ -292,7 +292,7 @@ area_mask = 1
 [node name="AudioExplode" type="AudioStreamPlayer2D" parent="." index="8"]
 
 stream = ExtResource( 7 )
-volume_db = -9.0
+volume_db = -3.0
 pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
