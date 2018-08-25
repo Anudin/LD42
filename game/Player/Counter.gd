@@ -13,11 +13,9 @@ func _ready():
 	shape_owner = create_shape_owner(self)
 	shape_owner_add_shape(get_shape_owners()[0], collider)
 
-func init(position, ref_target, target_offset):
+func init(position, target_position):
 	self.position = position
-	
-	var target = ref_target.get_ref()
-	velocity = ((target.position + target_offset) - position).normalized() * speed
+	velocity = (target_position - position).normalized() * speed
 
 func _process(delta):
 	position += velocity * delta

@@ -76,7 +76,11 @@ func _unhandled_input(event):
 			timer_doubleclick.stop()
 			register_doubleclick_input_event(event)
 			return
-	elif event.is_action_pressed("player_boost"):
+	elif abs(event.axis_value) < 0.1:
+		# Deadzone
+		return
+	
+	if event.is_action_pressed("player_boost"):
 		acceleration = acceleration.normalized() * boost_acceleration
 		timer_boost.start()
 	
@@ -84,24 +88,36 @@ func _unhandled_input(event):
 		if event.is_pressed():
 			acceleration.y = -max_acceleration
 			movement_event_occured = true
+			
+			if event is InputEventJoypadMotion:
+				acceleration.y *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.y = 0
 	if event.is_action("player_down"):
 		if event.is_pressed():
 			acceleration.y = max_acceleration
 			movement_event_occured = true
+			
+			if event is InputEventJoypadMotion:
+				acceleration.y *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.y = 0
 	if event.is_action("player_left"):
 		if event.is_pressed():
 			acceleration.x = -max_acceleration
 			movement_event_occured = true
+		
+			if event is InputEventJoypadMotion:
+				acceleration.x *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.x = 0
 	if event.is_action("player_right"):
 		if event.is_pressed():
 			acceleration.x = max_acceleration
 			movement_event_occured = true
+		
+			if event is InputEventJoypadMotion:
+				acceleration.x *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.x = 0
 	
@@ -117,7 +133,7 @@ func _unhandled_input(event):
 				tween_target_timescale.stop_all()
 				Engine.time_scale = 1
 				AudioServer.set_bus_effect_enabled(0, 0, false)
-	elif target_mode and target != null and event.is_action_pressed("player_counter"):
+	elif target_mode and event.is_action_pressed("player_counter"):
 		if counter_timer.value > 0:
 			counter_timer.value = 0
 			
@@ -223,16 +239,10 @@ func target():
 		), 
 		Color(1, 0, 0)
 	)
-	
-	if closest_rocket != null:
-		target = closest_rocket
-		target_offset = get_global_mouse_position() - closest_rocket.position
-	else:
-		target = null
 
 func counter():
 	var counter = tscn_counter.instance()
-	counter.init(position, weakref(target), target_offset)
+	counter.init(position, get_global_mouse_position())
 	get_node("/root/Main").add_child(counter)
 
 func _on_Player_area_shape_entered(area_id, area, area_shape, self_shape):
