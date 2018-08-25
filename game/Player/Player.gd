@@ -88,36 +88,24 @@ func _unhandled_input(event):
 		if event.is_pressed():
 			acceleration.y = -max_acceleration
 			movement_event_occured = true
-			
-			if event is InputEventJoypadMotion:
-				acceleration.y *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.y = 0
 	if event.is_action("player_down"):
 		if event.is_pressed():
 			acceleration.y = max_acceleration
 			movement_event_occured = true
-			
-			if event is InputEventJoypadMotion:
-				acceleration.y *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.y = 0
 	if event.is_action("player_left"):
 		if event.is_pressed():
 			acceleration.x = -max_acceleration
 			movement_event_occured = true
-		
-			if event is InputEventJoypadMotion:
-				acceleration.x *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.x = 0
 	if event.is_action("player_right"):
 		if event.is_pressed():
 			acceleration.x = max_acceleration
 			movement_event_occured = true
-		
-			if event is InputEventJoypadMotion:
-				acceleration.x *= abs(event.axis_value)
 		elif timer_boost.is_stopped():
 			acceleration.x = 0
 	
