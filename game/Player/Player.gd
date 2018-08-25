@@ -168,7 +168,8 @@ func _process(delta):
 	# Available charge must be reduced in realtime
 	delta = delta / Engine.time_scale
 	
-	Input.warp_mouse_position(get_viewport().get_mouse_position() + mouse_velocity * 360 * delta)
+	print(get_viewport().get_mouse_position())
+	get_viewport().warp_mouse(get_viewport().get_mouse_position() + mouse_velocity * 360 * delta)
 	
 	if not target_mode:
 		var prev = counter_timer.value
