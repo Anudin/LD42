@@ -76,9 +76,13 @@ func _unhandled_input(event):
 			timer_doubleclick.stop()
 			register_doubleclick_input_event(event)
 			return
-	elif abs(event.axis_value) < 0.1:
-		# Deadzone
-		return
+	
+	# TODO Handle touch via AutoLoad an distribute events, deadzone handling
+	if event is InputEventJoypadMotion:
+		if event.axis == JOY_AXIS_2:
+			mouse_velocity.x = event.axis_value
+		elif event.axis == JOY_AXIS_3:
+			mouse_velocity.y = event.axis_value
 	
 	if event.is_action_pressed("player_boost"):
 		acceleration = acceleration.normalized() * boost_acceleration
@@ -158,9 +162,13 @@ func register_doubleclick_input_event(event):
 	if boost_activated:
 		timer_boost.start()
 
+var mouse_velocity = Vector2(0, 0)
+
 func _process(delta):
 	# Available charge must be reduced in realtime
 	delta = delta / Engine.time_scale
+	
+	Input.warp_mouse_position(get_viewport().get_mouse_position() + mouse_velocity * 360 * delta)
 	
 	if not target_mode:
 		var prev = counter_timer.value
@@ -238,6 +246,7 @@ func _on_Player_area_shape_entered(area_id, area, area_shape, self_shape):
 		hit_by_rocket()
 
 func hit_by_rocket():
+	Input.start_joy_vibration(0, 0, 1, .75)
 	collision_shape.disabled = true
 
 	# Allow explosion animation to become visible

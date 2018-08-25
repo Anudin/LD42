@@ -1,7 +1,7 @@
 extends Node
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 
 	# Fullscreen toggle doesn't work from code when fullscreen is set in project settings
 	OS.window_fullscreen = true

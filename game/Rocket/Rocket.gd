@@ -83,6 +83,8 @@ func draw_explosion_preview():
 	draw_line(Vector2(0,0), to_local(target_position - velocity.normalized() * explosion_radius), Color("33FFFF00"), 2, false)
 
 func explode(kill = false):
+	Input.start_joy_vibration(0, 0, 1, .25)
+	
 	velocity *= .15
 	collision_shape.disabled = true
 	audio_explode.play()

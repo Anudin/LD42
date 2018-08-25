@@ -182,7 +182,7 @@ tracks/0/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 21.1087, 13.4595 )
 
-[node name="Rocket" type="Area2D" groups=[
+[node name="Rocket" type="Area2D" index="0" groups=[
 "rockets",
 ]]
 
